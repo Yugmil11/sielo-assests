@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ARLO — A Robotic Arm for Independence | Sielo Robotics</title>
+<meta name="description" content="ARLO by Sielo Robotics: a wheelchair-mounted assistive robotic arm that helps you reach, drink and eat independently. Book a demo.">
+<meta property="og:title" content="ARLO — A Robotic Arm for Independence">
+<meta property="og:description" content="Handle daily tasks yourself and rely less on caregivers. Book a personal demo with Sielo Robotics.">
+<meta property="og:image" content="media/photo-banner.jpg">
+<link rel="icon" href="media/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="sielo-body">
+<div class="sielo" id="sielo-root">
+
+<nav class="sielo-nav" id="sielo-nav">
+  <a href="#top" class="logo" aria-label="Sielo Robotics home"><img src="media/logo.png" alt="Sielo Robotics"></a>
+  <button class="burger" type="button" aria-label="Menu" aria-expanded="false" data-menu-toggle><span></span><span></span></button>
+  <div class="menu" data-menu>
+    <a href="#demo" data-menu-link>Features</a>
+    <a href="#testimonials" data-menu-link>Testimonials</a>
+    <a href="#people" data-menu-link>People</a>
+    <a href="#faq" data-menu-link>FAQ</a>
+    <a href="#contact" data-menu-link>Contact</a>
+    <a href="#contact" class="cta" data-menu-link>Book a Demo</a>
+  </div>
+  <div class="links">
+    <a href="#demo">Features</a>
+    <a href="#testimonials">Testimonials</a>
+    <a href="#people">People</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact">Contact</a>
+    <a href="#contact" class="btn-nav cta">Book a Demo</a>
+  </div>
+</nav>
+
+<header id="top" class="sielo-hero">
+  <video data-hero src="media/hero.mp4" autoplay muted loop playsinline preload="auto"></video>
+  <div class="wash"></div>
+  <div class="inner">
+    <p class="eyebrow">Sielo Robotics presents</p>
+    <h1>ARLO</h1>
+    <p class="sub">A Robotic Arm for Independence</p>
+    <div class="actions">
+      <a href="#contact" class="btn btn-peach">Pre-order</a>
+      <a href="#contact" class="btn btn-ghost">Become a beta tester</a>
+    </div>
+  </div>
+  <div class="scroll-hint"><span>Scroll</span><i></i></div>
+</header>
+
+<section class="sielo-trust">
+  <p class="label">Trusted by leading rehab centers and hospitals</p>
+  <div class="mask">
+    <div class="track">
+      <img src="media/logo-sante.png" alt="Santé Bruyère Health">
+      <img src="media/logo-vista.png" alt="Vista Centre">
+      <img src="media/logo-cheo.png" alt="CHEO Research Institute">
+      <img src="media/logo-houle.png" alt="Houle Healthcare">
+      <img src="media/logo-mdc.png" alt="Muscular Dystrophy Canada">
+      <img src="media/logo-odc.png" alt="Ontario Disability Coalition">
+      <img src="media/logo-sante.png" alt="" aria-hidden="true">
+      <img src="media/logo-vista.png" alt="" aria-hidden="true">
+      <img src="media/logo-cheo.png" alt="" aria-hidden="true">
+      <img src="media/logo-houle.png" alt="" aria-hidden="true">
+      <img src="media/logo-mdc.png" alt="" aria-hidden="true">
+      <img src="media/logo-odc.png" alt="" aria-hidden="true">
+    </div>
+  </div>
+</section>
+
+<section class="sielo-freedom">
+  <picture>
+    <source srcset="media/arm-reach.webp" type="image/webp">
+    <img class="arm" src="media/arm-reach.png" alt="" aria-hidden="true" loading="lazy">
+  </picture>
+  <div class="copy" data-reveal>
+    <p class="eyebrow">Freedom for you</p>
+    <h2>Handle daily tasks yourself and rely less on caregivers</h2>
+  </div>
+</section>
+
+<section id="demo" class="sielo-seq" data-seq>
+  <div class="pin">
+    <canvas data-seq-canvas aria-label="ARLO reaching, drinking and eating sequence"></canvas>
+    <div class="fade-top" aria-hidden="true"></div>
+    <div class="fade-bot" aria-hidden="true"></div>
+    <div class="grid">
+      <div class="copy">
+        <div class="phase" data-phase="0">
+          <p class="num">01 / Reach</p>
+          <h3>Pick up objects, independently.</h3>
+          <p class="body">ARLO reaches, grips, and lifts everyday items on command, so you're not waiting on someone else to hand them to you.</p>
+          <div class="quote">
+            <img src="media/person-alex.jpg" alt="Alex R.">
+            <div>
+              <p>"Being able to grab my phone off the table myself, whenever I want, sounds small until you've had to wait 20 minutes for someone to walk by."</p>
+              <p class="who">Alex R., 29 — Cerebral Palsy</p>
+            </div>
+          </div>
+        </div>
+        <div class="phase" data-phase="1">
+          <p class="num">02 / Drink</p>
+          <h3>Drink, independently.</h3>
+          <p class="body">Bring your own cup to your mouth, on your own schedule, whenever you're thirsty.</p>
+          <div class="quote">
+            <img src="media/person-hollis.jpg" alt="Hollis Peirce">
+            <div>
+              <p>"I used to time how much water I drank around when someone was free to help. Now I just drink when I'm thirsty, like anyone else."</p>
+              <p class="who">Hollis Peirce</p>
+            </div>
+          </div>
+        </div>
+        <div class="phase" data-phase="2">
+          <p class="num">03 / Eat</p>
+          <h3>Eat, independently.</h3>
+          <p class="body">Fork food from your plate to your mouth, bite after bite, without a caregiver feeding you.</p>
+          <div class="quote">
+            <img src="media/person-izzy.jpg" alt="Izzy">
+            <div>
+              <p>"Dinner used to be rushed because someone else had somewhere to be. Now I eat at my own pace, and it actually feels like my meal again."</p>
+              <p class="who">Izzy</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div aria-hidden="true" style="min-width:0;min-height:1px"></div>
+    </div>
+    <div class="progress"><i data-dot="0"></i><i data-dot="1"></i><i data-dot="2"></i><span>Scroll to explore</span></div>
+  </div>
+</section>
+
+<section id="insider" class="sielo-band">
+  <div class="row" data-reveal>
+    <a href="#contact" class="btn btn-dark shadow">Book a Demo</a>
+    <a href="#insider" class="btn btn-outline">Insider Access List</a>
+  </div>
+</section>
+
+<section id="testimonials" class="sielo-testi">
+  <div class="inner">
+    <h2 data-reveal>Don't just take our word for it</h2>
+    <figure data-reveal>
+      <span class="mark" aria-hidden="true">”</span>
+      <img src="media/person-sydney.jpg" alt="Sydney Hodgson">
+      <div style="position:relative;min-width:0">
+        <figcaption>Sydney Hodgson</figcaption>
+        <p class="meta">24, Ottawa, ON</p>
+        <blockquote>Having an assistive device like this would be <b>life changing</b>. I immediately started thinking about all of the things I would be able to do, and the <b>list hasn't stopped growing</b>. Being able to do simple tasks like picking up a dropped object or closing the door behind me may seem inconsequential to some but I know that that is <b>far from the truth</b>. Not to mention that Sielo Robotics actually is developing everything with <b>people that have lived experience</b> of needing this technology, so I know that it's designed with understanding not guess work.</blockquote>
+        <p class="ig">Instagram: @syd_hodgson20</p>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<section id="people" class="sielo-people">
+  <div class="inner">
+    <div class="head" data-reveal>
+      <p class="eyebrow">Our community</p>
+      <h2>Real People</h2>
+      <p class="lead">The ambassadors helping us build ARLO right — people with lived experience, shaping the product from the inside.</p>
+    </div>
+    <div class="cards" data-people></div>
+  </div>
+</section>
+
+<section id="faq" class="sielo-faq">
+  <div class="inner">
+    <h2 data-reveal>Frequently Asked Questions</h2>
+    <div class="list" data-faq data-reveal></div>
+  </div>
+</section>
+
+<section id="contact" class="sielo-contact">
+  <div class="inner" data-reveal>
+    <div class="copy">
+      <p class="eyebrow">Ready when you are</p>
+      <h2>See it in action, from your own chair.</h2>
+      <p class="lead">Book a personal demo with our team, or join the Insider Access List to hear first when Sielo is ready in your area.</p>
+      <div class="actions">
+        <a href="#contact" class="btn btn-dark shadow">Book a Demo</a>
+        <a href="#insider" class="btn btn-ghost">Insider Access List</a>
+      </div>
+    </div>
+    <div class="collage">
+      <div class="glow" aria-hidden="true"></div>
+      <img class="p1" src="media/photo-group.jpg" alt="The Sielo team gathered around a user operating ARLO" loading="lazy">
+      <img class="p2" src="media/photo-banner.jpg" alt="A user steering ARLO to open a cabinet door in the Sielo workshop" loading="lazy">
+      <img class="p3" src="media/photo-team-chat.jpg" alt="Two users and an engineer talking beside a chair fitted with ARLO" loading="lazy">
+      <img class="p4" src="media/photo-tablet.jpg" alt="A user and engineer reviewing ARLO controls on a tablet" loading="lazy">
+      <img class="p5" src="media/photo-cup.jpg" alt="ARLO holding a travel mug for a user" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<footer class="sielo-footer">
+  <div class="inner">
+    <img src="media/logo.png" alt="Sielo Robotics">
+    <div class="links">
+      <a href="#contact">Contact Us</a>
+      <a href="#terms">Terms of Use</a>
+      <a href="#privacy">Privacy Policy</a>
+    </div>
+    <p class="copy">Sielo Robotics © 2026</p>
+  </div>
+</footer>
+
+</div>
+
+<script src="app.js"></script>
+<script>SieloSite.mount(document.getElementById('sielo-root'));</script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+/* Sielo Robotics — ARLO landing page. Converted from the Claude Design export. */
+@font-face{font-family:'Sielo';src:url(media/sielo-500.ttf) format('truetype');font-weight:500;font-display:swap}
+@font-face{font-family:'Sielo';src:url(media/sielo-700.ttf) format('truetype');font-weight:700;font-display:swap}
+
+html{scroll-behavior:smooth}
+body.sielo-body{margin:0;background:#fcfcfd;overflow-x:hidden}
+
+.sielo{position:relative;width:100%;min-width:0;background:#fcfcfd;color:#192042;font-family:'Montserrat',sans-serif;-webkit-font-smoothing:antialiased;line-height:1.4;box-sizing:border-box}
+.sielo *,.sielo *::before,.sielo *::after{box-sizing:border-box}
+.sielo a{color:inherit;text-decoration:none}
+.sielo a:hover{color:#192042}
+.sielo img,.sielo video{display:block;max-width:100%}
+.sielo button{font-family:inherit}
+.sielo ::selection{background:#FDE4D8;color:#192042}
+.sielo h1,.sielo h2,.sielo h3,.sielo p{margin:0}
+.sielo .serif{font-family:'Sielo','Montserrat',sans-serif;font-weight:700}
+
+@keyframes sieloMarquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes sieloShine{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+@keyframes sieloBob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+/* ---------- nav ---------- */
+.sielo-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:14px clamp(20px,4vw,56px);background:transparent;border-bottom:1px solid transparent;transition:background .4s ease,border-color .4s ease}
+.sielo-nav.is-solid{background:rgba(252,252,253,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(25,32,66,.08)}
+.sielo-nav .logo img{height:52px;width:auto}
+.sielo-nav .links{display:flex;align-items:center;gap:clamp(16px,2.4vw,32px);font-size:14px;font-weight:600;color:#192042;justify-content:flex-end}
+.sielo-nav .links a{opacity:.82}
+.sielo-nav .links a:hover{opacity:1}
+.sielo-nav .links a.cta,.sielo-nav .links a.cta:hover{opacity:1}
+.sielo-nav .burger{display:none;flex-direction:column;align-items:center;justify-content:center;gap:5px;width:44px;height:44px;border-radius:50%;border:1px solid rgba(25,32,66,.15);background:rgba(255,255,255,.7);cursor:pointer;padding:0}
+.sielo-nav .burger span{display:block;width:18px;height:2px;border-radius:1px;background:#192042}
+.sielo-nav .menu{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;padding:6px 20px 20px;background:rgba(252,252,253,.97);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(25,32,66,.08);font-size:17px;font-weight:600;color:#192042}
+.sielo-nav .menu a{padding:14px 0;border-bottom:1px solid rgba(25,32,66,.08)}
+.sielo-nav .menu a:last-of-type{border-bottom:0}
+.sielo-nav .menu a.cta{display:flex;align-items:center;justify-content:center;margin-top:8px;padding:14px 20px;border-radius:999px;background:#192042;color:#fff;font-size:15px;border:0}
+.sielo-nav.is-open .menu{display:flex}
+.sielo.is-compact .sielo-nav .links{display:none}
+.sielo.is-compact .sielo-nav .burger{display:flex}
+
+/* buttons */
+.sielo .btn{display:inline-flex;align-items:center;justify-content:center;padding:15px 30px;border-radius:999px;font-size:15px;font-weight:600;transition:transform .25s ease,background .25s ease,border-color .25s ease;cursor:pointer}
+.sielo .btn-dark{background:#192042;color:#fff}
+.sielo .btn-dark:hover{background:#2a3466;transform:translateY(-2px);color:#fff}
+.sielo .btn-dark.shadow{box-shadow:0 10px 24px -12px rgba(25,32,66,.5)}
+.sielo .btn-peach{background:#FAA781;color:#192042}
+.sielo .btn-peach:hover{background:#f28a5c;transform:translateY(-2px);color:#192042}
+.sielo .btn-ghost{border:1.5px solid rgba(25,32,66,.3);color:#192042;font-weight:500}
+.sielo .btn-ghost:hover{border-color:#192042;background:rgba(25,32,66,.05);color:#192042}
+.sielo .btn-outline{border:1.5px solid #192042;color:#192042;font-weight:500}
+.sielo .btn-outline:hover{background:#FDE4D8;border-color:#f28a5c;color:#192042}
+.sielo .btn-nav{display:inline-flex;align-items:center;padding:10px 20px;border-radius:999px;background:#192042;color:#fff;font-size:13.5px;font-weight:600;transition:transform .25s ease,background .25s ease}
+.sielo .btn-nav:hover{background:#2a3466;transform:translateY(-1px);color:#fff}
+
+.sielo .eyebrow{font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#f28a5c}
+
+/* ---------- hero ---------- */
+.sielo-hero{position:relative;height:100svh;min-height:600px;overflow:hidden;background:#f6f6f7}
+.sielo-hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;transform:translateX(9%) scale(1.06);transform-origin:center}
+.sielo-hero .wash{position:absolute;inset:0;pointer-events:none;background:linear-gradient(100deg,#fcfcfd 0%,rgba(252,252,253,.8) 8%,rgba(252,252,253,.5) 30%,rgba(252,252,253,.1) 52%,rgba(252,252,253,0) 100%),linear-gradient(0deg,rgba(252,252,253,.5) 0%,rgba(252,252,253,0) 22%)}
+.sielo-hero .inner{position:relative;z-index:2;height:100%;max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,64px);display:flex;flex-direction:column;justify-content:center}
+.sielo-hero .eyebrow{margin:0 0 18px}
+.sielo-hero h1{font-family:'Sielo','Montserrat',sans-serif;font-weight:700;font-size:clamp(72px,12vw,168px);line-height:.95;letter-spacing:.01em;color:transparent;background:linear-gradient(102deg,#192042 0%,#192042 14%,#81D4FA 30%,#81D4FA 40%,#192042 50%,#FAA781 64%,#FAA781 74%,#192042 88%,#192042 100%);background-size:240% 100%;-webkit-background-clip:text;background-clip:text;animation:sieloShine 16s ease-in-out infinite}
+.sielo-hero .sub{margin:18px 0 0;font-weight:300;font-size:clamp(20px,2.4vw,32px);line-height:1.3;color:rgba(25,32,66,.8);max-width:22ch;text-wrap:pretty}
+.sielo-hero .actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:40px}
+.sielo-hero .scroll-hint{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;color:rgba(25,32,66,.55);font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:600}
+.sielo-hero .scroll-hint i{display:block;width:1px;height:28px;background:rgba(25,32,66,.35);animation:sieloBob 2.2s ease-in-out infinite}
+
+/* ---------- trust ---------- */
+.sielo-trust{padding:56px 0 24px;background:#fcfcfd}
+.sielo-trust .label{margin:0 0 28px;text-align:center;font-size:13px;font-weight:600;letter-spacing:.02em;color:#5c6270}
+.sielo-trust .mask{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.sielo-trust .track{display:inline-flex;align-items:center;gap:72px;padding-right:72px;animation:sieloMarquee 48s linear infinite;will-change:transform}
+.sielo-trust .track img{height:34px;width:auto;opacity:.72;flex:none}
+
+/* ---------- freedom intro ---------- */
+.sielo-freedom{position:relative;overflow:hidden;padding:clamp(120px,16vw,200px) clamp(20px,5vw,64px);background:linear-gradient(180deg,#fcfcfd 0%,#fcfcfd 40%,#f5f4f4 100%)}
+.sielo-freedom .arm{position:absolute;left:0;top:50%;width:clamp(300px,40vw,740px);height:auto;transform:translate(-10%,-50%);pointer-events:none}
+.sielo-freedom .copy{position:relative;max-width:980px;margin:0 auto;padding-left:clamp(0px,20vw,380px);text-align:center}
+.sielo-freedom .eyebrow{margin:0 0 22px}
+.sielo-freedom h2{font-family:'Sielo','Montserrat',sans-serif;font-weight:700;font-size:clamp(36px,5.4vw,76px);line-height:1.04;letter-spacing:-.01em;color:#192042;text-wrap:balance}
+
+/* ---------- scroll sequence ---------- */
+.sielo-seq{position:relative;height:420vh;background:#fcfcfd}
+.sielo-seq .pin{position:sticky;top:0;height:100vh;overflow:hidden;background:linear-gradient(135deg,#f5f4f4,#ebeae8)}
+.sielo-seq canvas{position:absolute;top:0;left:0;height:100%;aspect-ratio:3/4;display:block;-webkit-mask-image:linear-gradient(90deg,transparent,#000 15%,#000 85%,transparent);mask-image:linear-gradient(90deg,transparent,#000 15%,#000 85%,transparent)}
+.sielo-seq .fade-top{position:absolute;left:0;right:0;top:0;height:18vh;pointer-events:none;background:linear-gradient(180deg,#f5f4f4 0%,rgba(245,244,244,0) 100%)}
+.sielo-seq .fade-bot{position:absolute;left:0;right:0;bottom:0;height:16vh;pointer-events:none;background:linear-gradient(0deg,#fcfcfd 0%,rgba(252,252,253,0) 100%)}
+.sielo-seq .grid{position:absolute;inset:0;max-width:1240px;margin:0 auto;padding-left:clamp(20px,5vw,64px);padding-right:clamp(20px,5vw,64px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:clamp(24px,4vw,64px);align-items:center;padding-bottom:0}
+.sielo.is-compact .sielo-seq .grid{align-items:end;padding-bottom:84px}
+.sielo-seq .copy{position:relative;color:#192042;min-height:380px}
+.sielo.is-compact .sielo-seq .copy{min-height:280px;background:linear-gradient(180deg,rgba(245,244,244,0) 0%,rgba(245,244,244,.92) 48px,rgba(245,244,244,.92) 100%)}
+.sielo-seq .phase{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;opacity:0;transform:translateY(28px);transition:opacity .55s ease,transform .55s ease;pointer-events:none}
+.sielo-seq .phase.is-active{opacity:1;transform:translateY(0);pointer-events:auto}
+.sielo-seq .phase.is-past{transform:translateY(-28px)}
+.sielo-seq .phase .num{margin:0 0 20px;font-size:13px;font-weight:700;letter-spacing:.32em;text-transform:uppercase;color:#f28a5c}
+.sielo-seq .phase h3{font-family:'Sielo','Montserrat',sans-serif;font-weight:700;font-size:clamp(40px,5.4vw,78px);line-height:1;letter-spacing:-.01em;text-wrap:balance}
+.sielo-seq .phase .body{margin:26px 0 0;font-size:clamp(17px,1.4vw,21px);line-height:1.55;font-weight:400;color:#5c6270;max-width:46ch;text-wrap:pretty}
+.sielo-seq .quote{display:flex;gap:16px;align-items:flex-start;margin-top:36px;padding-top:28px;border-top:1px solid rgba(25,32,66,.12);max-width:520px}
+.sielo.is-compact .sielo-seq .quote{display:none}
+.sielo-seq .quote img{width:48px;height:48px;border-radius:50%;object-fit:cover;flex:none}
+.sielo-seq .quote p{font-size:15px;line-height:1.55;color:#192042;font-style:italic}
+.sielo-seq .quote .who{margin:10px 0 0;font-size:12.5px;font-weight:600;letter-spacing:.04em;color:#5c6270;font-style:normal}
+.sielo-seq .progress{position:absolute;left:clamp(20px,5vw,64px);bottom:36px;display:flex;align-items:center;gap:10px}
+.sielo-seq .progress i{display:block;height:4px;border-radius:2px;transition:all .45s ease;width:28px;background:rgba(25,32,66,.18)}
+.sielo-seq .progress i.is-active{width:56px;background:#FAA781}
+.sielo-seq .progress span{margin-left:10px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(25,32,66,.5);font-weight:600}
+
+/* ---------- CTA band ---------- */
+.sielo-band{padding:72px clamp(20px,5vw,64px);background:#fcfcfd}
+.sielo-band .row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+
+/* ---------- testimonials ---------- */
+.sielo-testi{padding:clamp(72px,9vw,120px) clamp(20px,5vw,64px);background:#fff}
+.sielo-testi .inner{max-width:1000px;margin:0 auto}
+.sielo-testi h2{margin:0 0 56px;text-align:center;font-family:'Sielo','Montserrat',sans-serif;font-weight:700;font-size:clamp(32px,4vw,52px);line-height:1.08;letter-spacing:-.01em;text-wrap:balance}
+.sielo-testi figure{margin:0;position:relative;display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(20px,3vw,40px);padding:0 clamp(0px,3vw,40px)}
+.sielo-testi .mark{position:absolute;top:-56px;right:clamp(0px,3vw,40px);font-family:'Sielo','Montserrat',sans-serif;font-size:160px;line-height:1;color:#D1F1FD;font-weight:700;pointer-events:none}
+.sielo-testi figure>img{width:clamp(72px,9vw,112px);height:clamp(72px,9vw,112px);border-radius:50%;object-fit:cover}
+.sielo-testi figcaption{font-weight:700;font-size:18px}
+.sielo-testi .meta{margin:2px 0 18px;font-size:14px;color:#5c6270}
+.sielo-testi blockquote{margin:0;font-size:clamp(16px,1.3vw,19px);line-height:1.65;color:#192042;text-wrap:pretty}
+.sielo-testi .ig{margin:18px 0 0;font-size:13px;font-weight:600;color:#5c6270}
+
+/* ---------- people ---------- */
+.sielo-people{padding:clamp(72px,9vw,120px) clamp(20px,5vw,64px);background:linear-gradient(180deg,#fff 0%,#EAF7FD 100%)}
+.sielo-people .inner{max-width:1140px;margin:0 auto}
+.sielo-people .head{max-width:640px;margin:0 auto 56px;text-align:center}
+.sielo-people .head .eyebrow{margin:0 0 18px}
+.sielo-people h2{font-family:'Sielo','Montserrat',sans-serif;font-weight:700;font-size:clamp(32px,4vw,52px);line-height:1.08;letter-spacing:-.01em}
+.sielo-people .head p.lead{margin:16px 0 0;font-size:17px;line-height:1.6;color:#5c6270;text-wrap:pretty}
+.sielo-people .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:20px}
+.sielo-people .card{background:#fff;border:1px solid #e2e5e9;border-radius:24px;padding:20px 20px 24px;display:flex;flex-direction:column;gap:14px;transition:transform .3s ease,box-shadow .3s ease}
+.sielo-people .card:hover{transform:translateY(-4px);box-shadow:0 24px 40px -24px rgba(25,32,66,.3)}
+.sielo-people .portrait{aspect-ratio:1;border-radius:16px;background:repeating-linear-gradient(135deg,#EAF7FD 0 10px,#D1F1FD 10px 20px);display:flex;align-items:center;justify-content:center;font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#192042;text-align:center;padding:12px;overflow:hidden}
+.sielo-people .portrait img{width:100%;height:100%;object-fit:cover}
+.sielo-people .card h3{font-family:'Sielo','Montserrat',sans-serif;font-weight:700;font-size:19px;line-height:1.2}
+.sielo-people .card .role{margin:6px 0 0;font-size:13px;font-weight:600;color:#f28a5c}
+.sielo-people .card .meta{margin:2px 0 0;font-size:13px;color:#7b818c}
+
+/* ---------- FAQ ---------- */
+.sielo-faq{padding:clamp(72px,9vw,120px) clamp(20px,5vw,64px);background:#f7f7f8}
+.sielo-faq .inner{max-width:800px;margin:0 auto}
+.sielo-faq h2{margin:0 0 48px;text-align:center;font-family:'Sielo','Montserrat',sans-serif;font-weight:700;font-size:clamp(32px,4vw,52px);line-height:1.08;letter-spacing:-.01em}
+.sielo-faq .list{display:flex;flex-direction:column;gap:12px}
+.sielo-faq .item{background:#fff;border:1px solid #e2e5e9;border-radius:18px;overflow:hidden}
+.sielo-faq .q{width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 24px;background:none;border:0;cursor:pointer;text-align:left;font-size:17px;font-weight:600;color:#192042;line-height:1.35}
+.sielo-faq .q .chev{flex:none;width:28px;height:28px;border-radius:50%;background:#eef0f2;display:flex;align-items:center;justify-content:center;transition:transform .35s ease}
+.sielo-faq .item.is-open .q .chev{transform:rotate(180deg)}
+.sielo-faq .a{overflow:hidden;transition:max-height .4s ease;max-height:0}
+.sielo-faq .item.is-open .a{max-height:400px}
+.sielo-faq .a p{padding:0 24px 22px;font-size:15.5px;line-height:1.65;color:#5c6270;text-wrap:pretty}
+
+/* ---------- final CTA ---------- */
+.sielo-contact{padding:clamp(72px,9vw,120px) clamp(20px,5vw,64px);background:linear-gradient(180deg,#fcfcfd 0%,#EAF7FD 28%,#D1F1FD 100%)}
+.sielo-contact .inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:clamp(40px,6vw,96px);align-items:center;color:#192042}
+.sielo-contact .copy{display:flex;flex-direction:column;justify-content:center}
+.sielo-contact .eyebrow{margin:0 0 18px}
+.sielo-contact h2{font-family:'Sielo','Montserrat',sans-serif;font-weight:700;font-size:clamp(32px,4vw,56px);line-height:1.05;letter-spacing:-.01em;text-wrap:balance}
+.sielo-contact .lead{margin:20px 0 0;font-size:17px;line-height:1.6;color:#5c6270;max-width:46ch;text-wrap:pretty}
+.sielo-contact .actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:36px}
+.sielo-contact .collage{position:relative;width:100%;aspect-ratio:10/9;min-width:0}
+.sielo-contact .glow{position:absolute;left:12%;top:18%;width:76%;height:64%;border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,.7),rgba(255,255,255,0));pointer-events:none}
+.sielo-contact .collage img{position:absolute;height:auto;box-shadow:0 24px 48px -24px rgba(25,32,66,.4)}
+.sielo-contact .p1{left:0;top:0;width:54%;border-radius:18px;transform:rotate(-2deg)}
+.sielo-contact .p2{left:58%;top:6.5%;width:40%;border-radius:16px;transform:rotate(2.5deg)}
+.sielo-contact .p3{left:38%;top:58%;width:26%;border-radius:14px;transform:rotate(-3deg);box-shadow:0 20px 40px -20px rgba(25,32,66,.4)}
+.sielo-contact .p4{left:4%;top:66%;width:36%;border-radius:14px;transform:rotate(3deg);box-shadow:0 20px 40px -20px rgba(25,32,66,.4)}
+.sielo-contact .p5{left:66%;top:55.5%;width:30%;border-radius:14px;transform:rotate(-1.5deg);box-shadow:0 20px 40px -20px rgba(25,32,66,.4)}
+
+/* ---------- footer ---------- */
+.sielo-footer{padding:40px clamp(20px,5vw,64px) 48px;border-top:1px solid rgba(25,32,66,.08);background:#D1F1FD}
+.sielo-footer .inner{max-width:1240px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.sielo-footer img{height:44px;width:auto}
+.sielo-footer .links{display:flex;gap:28px;font-size:14px;font-weight:600;color:#5c6270;flex-wrap:wrap}
+.sielo-footer .links a:hover{color:#192042}
+.sielo-footer .copy{font-size:13px;color:#7b818c}
+
+/* ---------- reveal ---------- */
+.sielo [data-reveal]{opacity:0;transform:translateY(24px);transition:opacity .8s cubic-bezier(.22,.61,.36,1),transform .8s cubic-bezier(.22,.61,.36,1)}
+.sielo [data-reveal].is-in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .sielo [data-reveal]{opacity:1;transform:none;transition:none}
+  .sielo-hero h1{animation:none}
+  .sielo-trust .track{animation:none}
+}
