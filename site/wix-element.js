@@ -11,6 +11,7 @@
     ? new URL('.', document.currentScript.src).href
     : 'https://yugmil11.github.io/sielo-assests/site/';
   var TAG = 'sielo-arlo-site';
+  var VERSION = '20261020b'; // bump on every deploy so Wix and browsers fetch fresh files
   if (window.customElements.get(TAG)) return;
 
   function addOnce(id, make) {
@@ -40,9 +41,9 @@
       addOnce('sielo-font-montserrat', function () { var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap'; return l; });
 
       Promise.all([
-        fetch(BASE + 'styles.css').then(function (r) { return r.text(); }),
-        fetch(BASE + 'body.html').then(function (r) { return r.text(); }),
-        loadScript(BASE + 'app.js')
+        fetch(BASE + 'styles.css?v=' + VERSION).then(function (r) { return r.text(); }),
+        fetch(BASE + 'body.html?v=' + VERSION).then(function (r) { return r.text(); }),
+        loadScript(BASE + 'app.js?v=' + VERSION)
       ]).then(function (res) {
         var css = res[0].replace(/url\((media\/[^)]+)\)/g, 'url(' + BASE + '$1)');
         // Wix pages keep their own body styles; scope ours to the element and reset the page gutter around it.
