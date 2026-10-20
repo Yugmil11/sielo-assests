@@ -6,7 +6,7 @@
 
   var TOTAL = 300;              // frames in seq/ (s000.jpg … s299.jpg), 30 fps
   var SEG_END = [92, 189, 299]; // each phase ends on a rest pose
-  var SEQ_HEIGHT_VH = 420;
+  var SEQ_HEIGHT_VH = 300;
   var PLAYBACK_FPS = 30;
 
   var PEOPLE = [1, 2, 3, 4].map(function () {
@@ -43,6 +43,7 @@
     var hero = root.querySelector('[data-hero]');
     var seq = root.querySelector('[data-seq]');
     var canvas = root.querySelector('[data-seq-canvas]');
+    var seqGrid = root.querySelector('[data-seq-grid]');
     var phases = Array.prototype.slice.call(root.querySelectorAll('[data-phase]'));
     var dots = Array.prototype.slice.call(root.querySelectorAll('[data-dot]'));
 
@@ -122,7 +123,7 @@
     // ---- scroll sequence
     seq.style.height = SEQ_HEIGHT_VH + 'vh';
     var ctx = null, blobs = [], bitmaps = [], decoding = new Set(), bmpH = 1200;
-    var cur = 0, tgt = 0, raf = null, lastT = 0, drawnKey = '', phase = 0, compact = false;
+    var cur = 0, tgt = 0, raf = null, lastT = 0, drawnKey = '', phase = 0, compact = null;
 
     function loadFrames() {
       blobs = new Array(TOTAL).fill(null);
@@ -181,10 +182,24 @@
     function sizeCanvas() {
       var wrap = canvas.parentElement, W = wrap.clientWidth, Hv = wrap.clientHeight;
       if (!W || !Hv) return;
-      var H = compact ? Math.round(Hv * 0.56) : Math.round(Hv * 0.9);
-      var top = compact ? Math.round(Hv * 0.07) : Math.round(Hv * 0.05);
+      var H, top, left, gridTop = 0, gridBottom = 0;
+      if (compact) {
+        // phones / portrait tablets: footage below the nav, copy in its own band underneath — never overlapping
+        var navH = 76, textH = 216, dotsH = 60;
+        H = Math.min(Math.max(200, Hv - navH - textH - dotsH), Math.round(W * 4 / 3) - 16);
+        top = navH;
+        left = Math.round((W - H * 3 / 4) / 2);
+        gridTop = top + H + 8; gridBottom = dotsH;
+      } else {
+        // desktop: 90% of the viewport height, right of centre beside the copy
+        H = Math.round(Hv * 0.9); top = Math.round(Hv * 0.05);
+        left = Math.round(W * 0.74 - H * 3 / 8);
+      }
       var cssW = Math.round(H * 3 / 4);
-      var left = Math.round((W > 820 ? W * 0.74 : W * 0.5) - cssW / 2);
+      if (seqGrid) {
+        if (seqGrid.style.top !== gridTop + 'px') seqGrid.style.top = gridTop + 'px';
+        if (seqGrid.style.bottom !== gridBottom + 'px') seqGrid.style.bottom = gridBottom + 'px';
+      }
       if (canvas.style.left !== left + 'px') canvas.style.left = left + 'px';
       if (canvas.style.top !== top + 'px') canvas.style.top = top + 'px';
       if (canvas.style.height !== H + 'px') canvas.style.height = H + 'px';
@@ -238,7 +253,8 @@
       var r = seq.getBoundingClientRect();
       var total = Math.max(1, r.height - global.innerHeight);
       var p = -r.top / total;
-      var seg = p < -0.02 ? -1 : p < 1 / 3 ? 0 : p < 2 / 3 ? 1 : 2;
+      // phase 0 plays as the section pins; later phases trigger at 20% and 40% of the pinned scroll, the rest holds the last pose
+      var seg = p < -0.02 ? -1 : p < 0.2 ? 0 : p < 0.4 ? 1 : 2;
       if (r.bottom > -global.innerHeight && r.top < global.innerHeight * 2) { sizeCanvas(); setPhaseTarget(seg); }
       applyNav();
     }

@@ -22,7 +22,8 @@ body.sielo-body{margin:0;background:#fcfcfd;overflow-x:hidden}
 /* ---------- nav ---------- */
 .sielo-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:14px clamp(20px,4vw,56px);background:transparent;border-bottom:1px solid transparent;transition:background .4s ease,border-color .4s ease}
 .sielo-nav.is-solid{background:rgba(252,252,253,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(25,32,66,.08)}
-.sielo-nav .logo img{height:52px;width:auto}
+.sielo-nav .logo img{height:52px;max-height:52px;width:auto}
+.sielo.is-compact .sielo-nav .logo img{height:40px}
 .sielo-nav .links{display:flex;align-items:center;gap:clamp(16px,2.4vw,32px);font-size:14px;font-weight:600;color:#192042;justify-content:flex-end}
 .sielo-nav .links a{opacity:.82}
 .sielo-nav .links a:hover{opacity:1}
@@ -54,14 +55,19 @@ body.sielo-body{margin:0;background:#fcfcfd;overflow-x:hidden}
 .sielo .eyebrow{font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#f28a5c}
 
 /* ---------- hero ---------- */
-.sielo-hero{position:relative;height:100svh;min-height:600px;overflow:hidden;background:#f6f6f7}
-.sielo-hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;transform:translateX(9%) scale(1.06);transform-origin:center}
+.sielo-hero{position:relative;height:100svh;min-height:600px;overflow:hidden;background:#fcfcfd}
+.sielo-hero video{position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:auto;object-fit:cover;object-position:center;transform-origin:center;transform:translateX(9%) scale(1.06);-webkit-mask-image:linear-gradient(90deg,rgba(0,0,0,0) 0%,#000 16%);mask-image:linear-gradient(90deg,rgba(0,0,0,0) 0%,#000 16%)}
+.sielo.is-compact .sielo-hero video{bottom:50%;transform:none;-webkit-mask-image:linear-gradient(180deg,#000 68%,rgba(0,0,0,0) 100%);mask-image:linear-gradient(180deg,#000 68%,rgba(0,0,0,0) 100%)}
+.sielo.is-compact .sielo-hero .wash{display:none}
 .sielo-hero .wash{position:absolute;inset:0;pointer-events:none;background:linear-gradient(100deg,#fcfcfd 0%,rgba(252,252,253,.8) 8%,rgba(252,252,253,.5) 30%,rgba(252,252,253,.1) 52%,rgba(252,252,253,0) 100%),linear-gradient(0deg,rgba(252,252,253,.5) 0%,rgba(252,252,253,0) 22%)}
 .sielo-hero .inner{position:relative;z-index:2;height:100%;max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,64px);display:flex;flex-direction:column;justify-content:center}
+.sielo.is-compact .sielo-hero .inner{justify-content:flex-end;padding-bottom:40px}
 .sielo-hero .eyebrow{margin:0 0 18px}
 .sielo-hero h1{font-family:'Sielo','Montserrat',sans-serif;font-weight:700;font-size:clamp(72px,12vw,168px);line-height:.95;letter-spacing:.01em;color:transparent;background:linear-gradient(102deg,#192042 0%,#192042 14%,#81D4FA 30%,#81D4FA 40%,#192042 50%,#FAA781 64%,#FAA781 74%,#192042 88%,#192042 100%);background-size:240% 100%;-webkit-background-clip:text;background-clip:text;animation:sieloShine 16s ease-in-out infinite}
 .sielo-hero .sub{margin:18px 0 0;font-weight:300;font-size:clamp(20px,2.4vw,32px);line-height:1.3;color:rgba(25,32,66,.8);max-width:22ch;text-wrap:pretty}
 .sielo-hero .actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:40px}
+.sielo.is-compact .sielo-hero .actions{flex-direction:column}
+.sielo.is-compact .sielo-hero .scroll-hint{display:none}
 .sielo-hero .scroll-hint{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;color:rgba(25,32,66,.55);font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:600}
 .sielo-hero .scroll-hint i{display:block;width:1px;height:28px;background:rgba(25,32,66,.35);animation:sieloBob 2.2s ease-in-out infinite}
 
@@ -73,28 +79,32 @@ body.sielo-body{margin:0;background:#fcfcfd;overflow-x:hidden}
 .sielo-trust .track img{height:34px;width:auto;opacity:.72;flex:none}
 
 /* ---------- freedom intro ---------- */
-.sielo-freedom{position:relative;overflow:hidden;padding:clamp(120px,16vw,200px) clamp(20px,5vw,64px);background:linear-gradient(180deg,#fcfcfd 0%,#fcfcfd 40%,#f5f4f4 100%)}
+.sielo-freedom{position:relative;overflow:hidden;padding:clamp(80px,16vw,200px) clamp(20px,5vw,64px);background:linear-gradient(180deg,#fcfcfd 0%,#fcfcfd 40%,#f5f4f4 100%)}
 .sielo-freedom .arm{position:absolute;left:0;top:50%;width:clamp(300px,40vw,740px);height:auto;transform:translate(-10%,-50%);pointer-events:none}
+.sielo.is-compact .sielo-freedom .arm{position:static;display:block;width:66vw;max-width:380px;transform:none;margin:0 0 32px calc(-1 * clamp(20px,5vw,64px) - 12vw)}
+.sielo.is-compact .sielo-freedom .copy{padding-left:0}
 .sielo-freedom .copy{position:relative;max-width:980px;margin:0 auto;padding-left:clamp(0px,20vw,380px);text-align:center}
 .sielo-freedom .eyebrow{margin:0 0 22px}
 .sielo-freedom h2{font-family:'Sielo','Montserrat',sans-serif;font-weight:700;font-size:clamp(36px,5.4vw,76px);line-height:1.04;letter-spacing:-.01em;color:#192042;text-wrap:balance}
 
 /* ---------- scroll sequence ---------- */
-.sielo-seq{position:relative;height:420vh;background:#fcfcfd}
-.sielo-seq .pin{position:sticky;top:0;height:100vh;overflow:hidden;background:linear-gradient(135deg,#f5f4f4,#ebeae8)}
+.sielo-seq{position:relative;height:300vh;background:#fcfcfd}
+.sielo-seq .pin{position:sticky;top:0;height:100svh;overflow:hidden;background:linear-gradient(135deg,#f5f4f4,#ebeae8)}
 .sielo-seq canvas{position:absolute;top:0;left:0;height:100%;aspect-ratio:3/4;display:block;-webkit-mask-image:linear-gradient(90deg,transparent,#000 15%,#000 85%,transparent);mask-image:linear-gradient(90deg,transparent,#000 15%,#000 85%,transparent)}
+.sielo.is-compact .sielo-seq canvas{-webkit-mask-image:none;mask-image:none}
+.sielo.is-compact .sielo-seq .fade-top{height:0}
 .sielo-seq .fade-top{position:absolute;left:0;right:0;top:0;height:18vh;pointer-events:none;background:linear-gradient(180deg,#f5f4f4 0%,rgba(245,244,244,0) 100%)}
 .sielo-seq .fade-bot{position:absolute;left:0;right:0;bottom:0;height:16vh;pointer-events:none;background:linear-gradient(0deg,#fcfcfd 0%,rgba(252,252,253,0) 100%)}
-.sielo-seq .grid{position:absolute;inset:0;max-width:1240px;margin:0 auto;padding-left:clamp(20px,5vw,64px);padding-right:clamp(20px,5vw,64px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:clamp(24px,4vw,64px);align-items:center;padding-bottom:0}
-.sielo.is-compact .sielo-seq .grid{align-items:end;padding-bottom:84px}
+.sielo-seq .grid{position:absolute;left:0;right:0;top:0;bottom:0;max-width:1240px;margin:0 auto;padding-left:clamp(20px,5vw,64px);padding-right:clamp(20px,5vw,64px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:clamp(24px,4vw,64px);align-items:center;padding-bottom:0}
+.sielo.is-compact .sielo-seq .grid{align-items:stretch}
 .sielo-seq .copy{position:relative;color:#192042;min-height:380px}
-.sielo.is-compact .sielo-seq .copy{min-height:280px;background:linear-gradient(180deg,rgba(245,244,244,0) 0%,rgba(245,244,244,.92) 48px,rgba(245,244,244,.92) 100%)}
+.sielo.is-compact .sielo-seq .copy{min-height:0;height:100%}
 .sielo-seq .phase{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;opacity:0;transform:translateY(28px);transition:opacity .55s ease,transform .55s ease;pointer-events:none}
 .sielo-seq .phase.is-active{opacity:1;transform:translateY(0);pointer-events:auto}
 .sielo-seq .phase.is-past{transform:translateY(-28px)}
 .sielo-seq .phase .num{margin:0 0 20px;font-size:13px;font-weight:700;letter-spacing:.32em;text-transform:uppercase;color:#f28a5c}
-.sielo-seq .phase h3{font-family:'Sielo','Montserrat',sans-serif;font-weight:700;font-size:clamp(40px,5.4vw,78px);line-height:1;letter-spacing:-.01em;text-wrap:balance}
-.sielo-seq .phase .body{margin:26px 0 0;font-size:clamp(17px,1.4vw,21px);line-height:1.55;font-weight:400;color:#5c6270;max-width:46ch;text-wrap:pretty}
+.sielo-seq .phase h3{font-family:'Sielo','Montserrat',sans-serif;font-weight:700;font-size:clamp(30px,5.4vw,78px);line-height:1.02;letter-spacing:-.01em;text-wrap:balance}
+.sielo-seq .phase .body{margin:clamp(16px,2vw,26px) 0 0;font-size:clamp(15px,1.4vw,21px);line-height:1.55;font-weight:400;color:#5c6270;max-width:46ch;text-wrap:pretty}
 .sielo-seq .quote{display:flex;gap:16px;align-items:flex-start;margin-top:36px;padding-top:28px;border-top:1px solid rgba(25,32,66,.12);max-width:520px}
 .sielo.is-compact .sielo-seq .quote{display:none}
 .sielo-seq .quote img{width:48px;height:48px;border-radius:50%;object-fit:cover;flex:none}
