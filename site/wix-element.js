@@ -22,7 +22,7 @@
     ? new URL('.', document.currentScript.src).href
     : 'https://yugmil11.github.io/sielo-assests/site/';
   var TAG = 'sielo-arlo-site';
-  var VERSION = '20261028c'; // bumped on every deploy so Wix and browsers fetch fresh files
+  var VERSION = '20261028d'; // bumped on every deploy so Wix and browsers fetch fresh files
   var BODIES = { home: 'body.html', contact: 'contact-body.html', involved: 'involved-body.html' };
   if (window.customElements.get(TAG)) return;
 
@@ -82,7 +82,10 @@
         loadScript(BASE + 'app.js?v=' + VERSION)
       ]).then(function (res) {
         var css = res[0].replace(/url\((media\/[^)]+)\)/g, 'url(' + BASE + '$1)');
-        css += '\n' + TAG + '{display:block;width:100%;margin:0;padding:0}' +
+        // Wix wraps the element in a flex/grid box that feeds its own height back into the element,
+        // which runs away to the browser's max height; size the element by its content only.
+        css += '\n' + TAG + '{display:block;width:100%;margin:0;padding:0;' +
+               'height:auto!important;min-height:0!important;max-height:none!important;flex:none!important;align-self:flex-start!important}' +
                '\n' + TAG + ' .sielo{min-height:100vh}';
         addOnce('sielo-site-styles', function () { var s = document.createElement('style'); s.textContent = css; return s; });
         el.innerHTML = res[1];
