@@ -9,6 +9,13 @@
   var SEQ_HEIGHT_VH = 300;
   var PLAYBACK_FPS = 30;
 
+  // Width that decides the compact (phone) layouts. Inside Wix the site can be narrower than the
+  // browser window (Wix's mobile layout is a 320px column), so use the smaller of the two.
+  function layoutWidth(root) {
+    var w = root && root.getBoundingClientRect ? root.getBoundingClientRect().width : 0;
+    return w > 0 ? Math.min(w, global.innerWidth) : global.innerWidth;
+  }
+
   var TESTIMONIALS = [
     { quote: "If I were to have access to a robotic arm on a day to day basis, it would be life changing. Minutely simple tasks like reaching for things that are even ever so slightly out of reach at my finger tips are equally as inaccessible to me as something a mile away. To think that I could be given the power to change that, and do more complex tasks such as turn on a light or feed myself, is mind blowing.", name: 'Hollis Peirce', meta: 'Head of Accessibility & Partnerships, Sielo', role: true, img: 'media/person-hollis.jpg' },
     { quote: "I have Cerebral Palsy Spastic Quadriplegic Generalized Dystonia. Not every door has an accessible button on it, or the button is too high for me to reach, and not every store is accessible so I have to wait outside. I only have one cooperative arm, so I can't do a lot of things independently, but I would love to. I think the robot arm is awesome and I think it will help me to do a lot more things independently, and it's so easy to use.", name: 'Charlotte Breau', meta: 'Early Design Contributor', role: true, img: 'media/person-charlotte.jpg' },
@@ -292,9 +299,10 @@
     // ---- scroll / resize
     var tick = false;
     function update() {
-      var c = global.innerWidth < 900;
+      var lw = layoutWidth(root);
+      var c = lw < 900;
       if (c !== compact) { compact = c; root.classList.toggle('is-compact', c); drawnKey = ''; requestAnimationFrame(function () { rail.scrollLeft = (N + tIdx) * railStep(); }); }
-      var nc2 = global.innerWidth < 1000;
+      var nc2 = lw < 1000;
       if (nc2 !== navCompact) { navCompact = nc2; root.classList.toggle('is-navcompact', nc2); if (menuOpen) setMenu(false); }
       // highlight the nav item for the section under the top third of the screen
       var line = global.innerHeight * 0.35;
@@ -490,7 +498,7 @@
 
     // layout switch below 760px
     var fc = null;
-    function onResize() { var c = global.innerWidth < 760; if (c !== fc) { fc = c; root.classList.toggle('is-formcompact', c); } }
+    function onResize() { var c = layoutWidth(root) < 760; if (c !== fc) { fc = c; root.classList.toggle('is-formcompact', c); } }
     global.addEventListener('resize', onResize); onResize();
   }
 
