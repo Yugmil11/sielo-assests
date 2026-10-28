@@ -452,27 +452,40 @@
       }
       if (first) { first.focus(); return; }
 
-      var data = { form: kind === 'contact' ? 'Contact Us' : 'Get Involved' };
-      form.querySelectorAll('input,textarea').forEach(function (el) {
-        if (el.type === 'checkbox') data[el.name] = el.checked ? 'yes' : 'no';
-        else data[el.name] = el.value.trim();
-      });
-      if (kind === 'contact') data._subject = 'Website contact: ' + data.subject;
-      else data._subject = 'Get Involved: ' + data.firstName + ' ' + data.lastName;
+      // One flat record, same shape for every destination (Wix CMS row, Formspree email)
+      var val = function (n) { var el = form.querySelector('[name="' + n + '"]'); return el ? el.value.trim() : ''; };
+      var on = function (n) { var el = form.querySelector('[name="' + n + '"]'); return !!(el && el.checked); };
+      var rec = {
+        form: kind === 'contact' ? 'Contact Us' : 'Get Involved',
+        firstName: val('firstName'), lastName: val('lastName'), email: val('email'), phone: val('phone'),
+        organization: val('org'), newsletter: on('newsletter')
+      };
+      if (kind === 'contact') { rec.subject = val('subject'); rec.message = val('message'); }
+      else {
+        rec.city = val('city'); rec.notes = val('notes');
+        rec.interests = def.options.filter(function (o) { return on(o.id); }).map(function (o) { return o.label; }).join('; ');
+      }
 
-      var done = function () {
+      var send;
+      if (typeof opts.submit === 'function') send = opts.submit;            // Wix: handled by Velo page code
+      else if (endpoint) send = function (r) {                               // Formspree or similar
+        var body = Object.assign({ _subject: (kind === 'contact' ? 'Website contact: ' + r.subject : 'Get Involved: ' + r.firstName + ' ' + r.lastName) }, r);
+        return fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(body) })
+          .then(function (res) { if (!res.ok) throw new Error('HTTP ' + res.status); });
+      };
+      else send = function () { return Promise.reject(new Error('not-connected')); };
+
+      var btn = form.querySelector('.submit'); btn.disabled = true;
+      Promise.resolve().then(function () { return send(rec); }).then(function () {
         form.hidden = true; sent.hidden = false;
         global.scrollTo({ top: card.getBoundingClientRect().top + global.scrollY - 110, behavior: 'smooth' });
-      };
-      if (!endpoint) { if (global.console) console.warn('Sielo form: no endpoint configured, submission not sent', data); done(); return; }
-      var btn = form.querySelector('.submit'); btn.disabled = true;
-      fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(data) })
-        .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); done(); })
-        .catch(function () {
-          btn.disabled = false;
-          formErr.textContent = "Sorry, your message didn't go through. Please try again in a moment.";
-          formErr.hidden = false;
-        });
+      }).catch(function (err) {
+        btn.disabled = false;
+        formErr.textContent = err && err.message === 'not-connected'
+          ? "This form isn't accepting submissions yet, so your message was not sent."
+          : "Sorry, your message didn't go through. Please try again in a moment.";
+        formErr.hidden = false;
+      });
     });
 
     // layout switch below 760px

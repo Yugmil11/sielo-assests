@@ -8,14 +8,19 @@
      involved-url  Wix page path for Get Involved   (default /get-involved)
      home-url      Wix page path for the home page  (default /)
    The element renders the page in normal document flow (no iframe), loading markup,
-   styles, images, video and the frame sequence from BASE. */
+   styles, images, video and the frame sequence from BASE.
+
+   Form submissions (page="contact" / page="involved"): the element fires a "sielo-submit"
+   event with { id, record }. Wix page code (Velo) saves the record and answers by setting the
+   element's "submit-result" attribute to "<id>:ok" or "<id>:error". No answer in 20 s = error,
+   so a visitor is never told "thanks" for a message that wasn't saved. */
 (function () {
   'use strict';
   var BASE = (document.currentScript && document.currentScript.src)
     ? new URL('.', document.currentScript.src).href
     : 'https://yugmil11.github.io/sielo-assests/site/';
   var TAG = 'sielo-arlo-site';
-  var VERSION = '20261028a'; // bumped on every deploy so Wix and browsers fetch fresh files
+  var VERSION = '20261028b'; // bumped on every deploy so Wix and browsers fetch fresh files
   var BODIES = { home: 'body.html', contact: 'contact-body.html', involved: 'involved-body.html' };
   if (window.customElements.get(TAG)) return;
 
@@ -33,6 +38,25 @@
   }
 
   class SieloArloSite extends HTMLElement {
+    static get observedAttributes() { return ['submit-result']; }
+    attributeChangedCallback(name, oldV, v) {
+      if (name !== 'submit-result' || !v) return;
+      var parts = String(v).split(':'), id = parts[0], ok = parts[1] === 'ok';
+      var p = this.__pending && this.__pending[id];
+      if (!p) return;
+      delete this.__pending[id]; clearTimeout(p.timer);
+      if (ok) p.resolve(); else p.reject(new Error('wix-error'));
+    }
+    submitToWix(record) {
+      var el = this;
+      el.__pending = el.__pending || {};
+      var id = 's' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+      return new Promise(function (resolve, reject) {
+        var timer = setTimeout(function () { delete el.__pending[id]; reject(new Error('wix-timeout')); }, 20000);
+        el.__pending[id] = { resolve: resolve, reject: reject, timer: timer };
+        el.dispatchEvent(new CustomEvent('sielo-submit', { detail: { id: id, record: record } }));
+      });
+    }
     connectedCallback() {
       if (this.__mounted) return;
       this.__mounted = true;
@@ -70,7 +94,7 @@
         var root = el.querySelector('#sielo-root');
         el.__site = page === 'home'
           ? window.SieloSite.mount(root, { base: BASE })
-          : window.SieloSite.mountForm(root, { base: BASE });
+          : window.SieloSite.mountForm(root, { base: BASE, submit: el.submitToWix.bind(el) });
       }).catch(function (err) {
         el.innerHTML = '<p style="font-family:sans-serif;padding:24px">Sielo site failed to load: ' + err.message + '</p>';
       });
