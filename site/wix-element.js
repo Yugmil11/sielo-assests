@@ -7,6 +7,8 @@
      contact-url   Wix page path for Contact Us     (default /contact)
      involved-url  Wix page path for Get Involved   (default /get-involved)
      home-url      Wix page path for the home page  (default /)
+     terms-url     Wix page path for Terms of Use   (default /terms-of-use)
+     privacy-url   Wix page path for Privacy Policy (default /english-privacy-policy)
    The element renders the page in normal document flow (no iframe), loading markup,
    styles, images, video and the frame sequence from BASE.
 
@@ -20,7 +22,7 @@
     ? new URL('.', document.currentScript.src).href
     : 'https://yugmil11.github.io/sielo-assests/site/';
   var TAG = 'sielo-arlo-site';
-  var VERSION = '20261028b'; // bumped on every deploy so Wix and browsers fetch fresh files
+  var VERSION = '20261028c'; // bumped on every deploy so Wix and browsers fetch fresh files
   var BODIES = { home: 'body.html', contact: 'contact-body.html', involved: 'involved-body.html' };
   if (window.customElements.get(TAG)) return;
 
@@ -85,8 +87,14 @@
         addOnce('sielo-site-styles', function () { var s = document.createElement('style'); s.textContent = css; return s; });
         el.innerHTML = res[1];
         // point the site's own page links at the matching Wix pages (keeps ?interest=… and #section)
+        var legal = {
+          '#terms': el.getAttribute('terms-url') || '/terms-of-use',
+          '#privacy': el.getAttribute('privacy-url') || '/english-privacy-policy'
+        };
         el.querySelectorAll('a[href]').forEach(function (a) {
-          var m = a.getAttribute('href').match(/^(index\.html|contact\.html|get-involved\.html)(.*)$/);
+          var href = a.getAttribute('href');
+          if (legal[href]) { a.setAttribute('href', legal[href]); return; }
+          var m = href.match(/^(index\.html|contact\.html|get-involved\.html)(.*)$/);
           if (!m) return;
           var target = urls[m[1]], rest = m[2] || '';
           a.setAttribute('href', (target === '/' && rest.charAt(0) === '#') ? '/' + rest : target + rest);
