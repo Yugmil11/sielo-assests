@@ -22,7 +22,7 @@
     ? new URL('.', document.currentScript.src).href
     : 'https://yugmil11.github.io/sielo-assests/site/';
   var TAG = 'sielo-arlo-site';
-  var VERSION = '20261028d'; // bumped on every deploy so Wix and browsers fetch fresh files
+  var VERSION = '20261028e'; // bumped on every deploy so Wix and browsers fetch fresh files
   var BODIES = { home: 'body.html', contact: 'contact-body.html', involved: 'involved-body.html' };
   if (window.customElements.get(TAG)) return;
 
@@ -86,7 +86,9 @@
         // which runs away to the browser's max height; size the element by its content only.
         css += '\n' + TAG + '{display:block;width:100%;margin:0;padding:0;' +
                'height:auto!important;min-height:0!important;max-height:none!important;flex:none!important;align-self:flex-start!important}' +
-               '\n' + TAG + ' .sielo{min-height:100vh}';
+               '\n' + TAG + ' .sielo{min-height:100vh}' +
+               // Wix's section layout pulls the grid up by (content - editor height); keep the page at the top.
+               '\n[data-mesh-id]:has(> div > ' + TAG + '){margin-top:0!important}';
         addOnce('sielo-site-styles', function () { var s = document.createElement('style'); s.textContent = css; return s; });
         el.innerHTML = res[1];
         // point the site's own page links at the matching Wix pages (keeps ?interest=… and #section)
