@@ -175,6 +175,10 @@
     var ctx = null, blobs = [], bitmaps = [], decoding = new Set(), bmpH = 1200;
     var cur = 0, tgt = 0, raf = null, lastT = 0, drawnKey = '', phase = 0, compact = null, navCompact = null, navActive = null;
     var navLinks = Array.prototype.slice.call(root.querySelectorAll('[data-nav]'));
+    var fontsReady = false;
+    if (global.document.fonts && global.document.fonts.ready) {
+      global.document.fonts.ready.then(function () { fontsReady = true; onScroll(); });
+    }
 
     function loadFrames() {
       blobs = new Array(TOTAL).fill(null);
@@ -230,17 +234,41 @@
       if (b) { ctx.globalAlpha = frac; ctx.drawImage(b, 0, 0, cw, ch); ctx.globalAlpha = 1; }
       drawnKey = key;
     }
+    // tallest phase copy (heading + body) at the current width; re-measured when the width or fonts change
+    var textMeasure = { key: '', h: 0 };
+    function measureCopy(W) {
+      var key = W + ':' + (fontsReady ? 1 : 0);
+      if (textMeasure.key === key) return textMeasure.h;
+      var h = 0;
+      phases.forEach(function (ph) {
+        var sum = 0;
+        Array.prototype.forEach.call(ph.children, function (c) {
+          var cs = global.getComputedStyle(c);
+          if (cs.display === 'none') return;
+          sum += c.offsetHeight + (parseFloat(cs.marginTop) || 0) + (parseFloat(cs.marginBottom) || 0);
+        });
+        if (sum > h) h = sum;
+      });
+      textMeasure = { key: key, h: h };
+      return h;
+    }
     function sizeCanvas() {
       var wrap = canvas.parentElement, W = wrap.clientWidth, Hv = wrap.clientHeight;
       if (!W || !Hv) return;
       var H, top, left, gridTop = 0, gridBottom = 0;
       if (compact) {
-        // phones / portrait tablets: footage below the nav, copy in its own band underneath — never overlapping
-        var navH = 76, textH = 216, dotsH = 60;
-        H = Math.min(Math.max(200, Hv - navH - textH - dotsH), Math.round(W * 4 / 3) - 16);
+        // phones / portrait tablets: footage as wide as the screen under the nav; the copy sits at the
+        // bottom and may cover up to the lower 45% of the footage, which fades out behind it (CSS mask)
+        var navH = nav ? nav.offsetHeight : 76, dotsH = 40, overlap = 0.45;
+        var textH = measureCopy(W) || 200;
+        H = Math.min(Hv - navH - dotsH, Math.round(W * 4 / 3), Math.floor((Hv - navH - dotsH - textH) / (1 - overlap)));
+        H = Math.max(180, H);
         top = navH;
         left = Math.round((W - H * 3 / 4) / 2);
-        gridTop = top + H + 8; gridBottom = dotsH;
+        gridTop = top + Math.round(H * (1 - overlap)); gridBottom = dotsH;
+        // start fading the footage a little above where the copy begins (copy is bottom-aligned in its band)
+        var copyTop = Hv - dotsH - textH, fade = Math.max(30, Math.min(90, Math.round((copyTop - top) / H * 100) - 16));
+        canvas.style.setProperty('--sielo-fade', fade + '%');
       } else {
         // desktop: 90% of the viewport height, right of centre beside the copy
         H = Math.round(Hv * 0.9); top = Math.round(Hv * 0.05);

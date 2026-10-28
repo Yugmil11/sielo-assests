@@ -95,12 +95,18 @@ body.sielo-body{margin:0;background:#fcfcfd;overflow-x:hidden}
 .sielo-seq{position:relative;height:300vh;background:#fcfcfd}
 .sielo-seq .pin{position:sticky;top:0;height:100svh;overflow:hidden;background:linear-gradient(135deg,#f5f4f4,#ebeae8)}
 .sielo-seq canvas{position:absolute;top:0;left:0;height:100%;aspect-ratio:3/4;display:block;-webkit-mask-image:linear-gradient(90deg,transparent,#000 15%,#000 85%,transparent);mask-image:linear-gradient(90deg,transparent,#000 15%,#000 85%,transparent)}
-.sielo.is-compact .sielo-seq canvas{-webkit-mask-image:none;mask-image:none}
+.sielo.is-compact .sielo-seq canvas{-webkit-mask-image:linear-gradient(180deg,#000 var(--sielo-fade,50%),transparent calc(var(--sielo-fade,50%) + 34%));mask-image:linear-gradient(180deg,#000 var(--sielo-fade,50%),transparent calc(var(--sielo-fade,50%) + 34%))}
+.sielo.is-compact .sielo-seq .phase{justify-content:flex-end}
+.sielo.is-compact .sielo-seq .phase .num{margin-bottom:12px}
+.sielo.is-compact .sielo-seq .phase .body{margin-top:12px}
+.sielo.is-compact .sielo-seq .progress{bottom:14px}
+.sielo.is-compact .sielo-seq .progress span{display:none}
 .sielo.is-compact .sielo-seq .fade-top{height:0}
 .sielo-seq .fade-top{position:absolute;left:0;right:0;top:0;height:18vh;pointer-events:none;background:linear-gradient(180deg,#f5f4f4 0%,rgba(245,244,244,0) 100%)}
 .sielo-seq .fade-bot{position:absolute;left:0;right:0;bottom:0;height:16vh;pointer-events:none;background:linear-gradient(0deg,#fcfcfd 0%,rgba(252,252,253,0) 100%)}
 .sielo-seq .grid{position:absolute;left:0;right:0;top:0;bottom:0;max-width:1240px;margin:0 auto;padding-left:clamp(20px,5vw,64px);padding-right:clamp(20px,5vw,64px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:clamp(24px,4vw,64px);align-items:center;padding-bottom:0}
-.sielo.is-compact .sielo-seq .grid{align-items:stretch}
+.sielo.is-compact .sielo-seq .grid{align-items:stretch;grid-template-columns:100%;grid-template-rows:100%}
+.sielo.is-compact .sielo-seq .grid>[aria-hidden]{display:none}
 .sielo-seq .copy{position:relative;color:#192042;min-height:380px}
 .sielo.is-compact .sielo-seq .copy{min-height:0;height:100%}
 .sielo-seq .phase{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;opacity:0;transform:translateY(28px);transition:opacity .55s ease,transform .55s ease;pointer-events:none}
