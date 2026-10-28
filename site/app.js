@@ -9,9 +9,15 @@
   var SEQ_HEIGHT_VH = 300;
   var PLAYBACK_FPS = 30;
 
-  var PEOPLE = [1, 2, 3, 4].map(function () {
-    return { name: 'Ambassador Name', role: 'Community Ambassador', meta: 'City, Province', photo: '' };
-  });
+  var TESTIMONIALS = [
+    { quote: "If I were to have access to a robotic arm on a day to day basis, it would be life changing. Minutely simple tasks like reaching for things that are even ever so slightly out of reach at my finger tips are equally as inaccessible to me as something a mile away. To think that I could be given the power to change that, and do more complex tasks such as turn on a light or feed myself, is mind blowing.", name: 'Hollis Peirce', meta: 'Head of Accessibility & Partnerships, Sielo', role: true, img: 'media/person-hollis.jpg' },
+    { quote: "I have Cerebral Palsy Spastic Quadriplegic Generalized Dystonia. Not every door has an accessible button on it, or the button is too high for me to reach, and not every store is accessible so I have to wait outside. I only have one cooperative arm, so I can't do a lot of things independently, but I would love to. I think the robot arm is awesome and I think it will help me to do a lot more things independently, and it's so easy to use.", name: 'Charlotte Breau', meta: 'Early Design Contributor', role: true, img: 'media/person-charlotte.jpg' },
+    { quote: "I was diagnosed with Severe Arthrogryposis Multiplex Congenita (AMC), and I deal with challenges pretty much most days of my life. Sometimes I've been to places that aren't accessible, like I can't get up on the sidewalk somewhere or they don't have a button to open the door. I find ARLO very easy to use. It will be very helpful for me and give me the independence I need to do the simplest things. It will give me the best quality of life!", name: 'Sienna Beaudoin', meta: 'Early Design Contributor', role: true, img: 'media/person-sienna.jpg' },
+    { quote: "Being able to grab objects myself gives me a whole new level of freedom that I wouldn't normally have. Something as simple as dropping an item in a grocery store and not being able to reach it can turn a two-second moment into a whole situation where I have to find someone to help me pick it up. Having this type of technology means I can be more independent, make my own choices, and just get on with my day without constantly having to rely on someone else.", name: 'Izzy Sicoli', meta: 'Early Design Contributor', role: true, img: 'media/person-izzy.jpg' },
+    { quote: "Having an assistive device like this would be life changing. I immediately started thinking about all of the things I would be able to do, and the list hasn't stopped growing. Being able to do simple tasks like picking up a dropped object or closing the door behind me is an essential part of life that this arm gives me the ability and freedom to do independently. Not to mention that Sielo Robotics actually is developing everything with people that have lived experience of needing this technology, so I know that it's designed with understanding not guess work.", name: 'Sydney Hodgson', meta: 'Ottawa, Ontario', img: 'media/person-sydney.jpg' },
+    { quote: "It's important to make advances in robotics accessible and affordable for people with disabilities. Sielo is a trailblazer when it comes to these values to improve the lives of disabled people with robotics innovations.", name: 'Chris Binkowski', meta: 'Ottawa, Ontario', img: 'media/person-chris.jpg' },
+    { quote: "As someone born with Cerebral Palsy, I have never possessed the coordination to feed myself a snack or even a full meal. Having the robotic arm to assist me with this daily task would mean I can finally choose the first and the last bite I get to eat every single time. Also with this assistance, I can go out to dinner with whoever I choose to and I don't have to ask the person if they are comfortable assisting me.", name: 'Tammy Culhane', meta: 'Community member', img: 'media/person-tammy.jpg', pos: '50% 30%' }
+  ];
 
   var FAQS = [
     ['Will it work with my power chair?', "The arm is built to mount to most major power chair brands and frames, including tilt and recline bases. Send us your chair's make and model and our team will confirm fit before you book a demo."],
@@ -62,20 +68,57 @@
       nav.classList.toggle('is-solid', scrolled || menuOpen);
     }
 
-    // ---- people cards
-    var peopleWrap = root.querySelector('[data-people]');
-    PEOPLE.forEach(function (p) {
-      var card = document.createElement('div');
-      card.className = 'card';
-      card.setAttribute('data-reveal', '');
-      card.innerHTML =
-        '<div class="portrait">' + (p.photo ? '<img src="' + p.photo + '" alt="' + p.name + '">' : 'ambassador portrait') + '</div>' +
-        '<div><h3></h3><p class="role"></p><p class="meta"></p></div>';
-      card.querySelector('h3').textContent = p.name;
-      card.querySelector('.role').textContent = p.role;
-      card.querySelector('.meta').textContent = p.meta;
-      peopleWrap.appendChild(card);
+    // ---- testimonial carousel: 3 copies of the list, we live in the middle copy and silently
+    // recentre after each snap so it loops forever in both directions
+    var rail = root.querySelector('[data-rail]');
+    var railDots = root.querySelector('[data-rail-dots]');
+    var N = TESTIMONIALS.length, tIdx = 0, railT = null;
+    [0, 1, 2].forEach(function (copy) {
+      TESTIMONIALS.forEach(function (t) {
+        var fig = document.createElement('figure');
+        if (copy !== 1) fig.setAttribute('aria-hidden', 'true');
+        var bq = document.createElement('blockquote'); bq.textContent = t.quote;
+        var cap = document.createElement('figcaption');
+        var av;
+        if (t.img) { av = document.createElement('img'); av.src = base + t.img; av.alt = t.name; av.loading = 'lazy'; av.style.objectPosition = t.pos || '50% 22%'; }
+        else { av = document.createElement('span'); av.className = 'initial'; av.textContent = t.name.charAt(0); }
+        var who = document.createElement('div'); who.style.minWidth = '0';
+        var nm = document.createElement('p'); nm.className = 'name'; nm.textContent = t.name;
+        var mt = document.createElement('p'); mt.className = 'meta' + (t.role ? ' role' : ''); mt.textContent = t.meta;
+        who.appendChild(nm); who.appendChild(mt); cap.appendChild(av); cap.appendChild(who);
+        fig.appendChild(bq); fig.appendChild(cap); rail.appendChild(fig);
+      });
     });
+    var dotEls = TESTIMONIALS.map(function (t, i) {
+      var d = document.createElement('button'); d.type = 'button'; d.setAttribute('aria-label', 'Testimonial ' + (i + 1));
+      d.addEventListener('click', function () { railGo(i); });
+      railDots.appendChild(d); return d;
+    });
+    function mod(n) { return ((n % N) + N) % N; }
+    function railStep() { var f = rail.firstElementChild; return f ? f.getBoundingClientRect().width + 24 : 1; }
+    function setDot(i) { tIdx = i; dotEls.forEach(function (d, k) { d.classList.toggle('is-active', k === i); }); }
+    function railGo(i) {
+      var step = railStep(), pos = Math.round(rail.scrollLeft / step) + (i - tIdx);
+      rail.scrollTo({ left: pos * step, behavior: 'smooth' });
+      setDot(mod(i));
+    }
+    function railCentre() {
+      var step = railStep(), pos = Math.round(rail.scrollLeft / step);
+      if (pos < N || pos >= 2 * N) {
+        var prev = rail.style.scrollSnapType; rail.style.scrollSnapType = 'none';
+        rail.scrollLeft = (N + mod(pos)) * step;
+        rail.style.scrollSnapType = prev;
+      }
+    }
+    rail.addEventListener('scroll', function () {
+      var i = mod(Math.round(rail.scrollLeft / railStep()));
+      if (i !== tIdx) setDot(i);
+      clearTimeout(railT); railT = setTimeout(railCentre, 120);
+    }, { passive: true });
+    root.querySelector('[data-rail-prev]').addEventListener('click', function () { railGo(tIdx - 1); });
+    root.querySelector('[data-rail-next]').addEventListener('click', function () { railGo(tIdx + 1); });
+    setDot(0);
+    requestAnimationFrame(function () { rail.scrollLeft = N * railStep(); });
 
     // ---- FAQ accordion
     var faqWrap = root.querySelector('[data-faq]');
@@ -123,7 +166,8 @@
     // ---- scroll sequence
     seq.style.height = SEQ_HEIGHT_VH + 'vh';
     var ctx = null, blobs = [], bitmaps = [], decoding = new Set(), bmpH = 1200;
-    var cur = 0, tgt = 0, raf = null, lastT = 0, drawnKey = '', phase = 0, compact = null;
+    var cur = 0, tgt = 0, raf = null, lastT = 0, drawnKey = '', phase = 0, compact = null, navCompact = null, navActive = null;
+    var navLinks = Array.prototype.slice.call(root.querySelectorAll('[data-nav]'));
 
     function loadFrames() {
       blobs = new Array(TOTAL).fill(null);
@@ -249,7 +293,14 @@
     var tick = false;
     function update() {
       var c = global.innerWidth < 900;
-      if (c !== compact) { compact = c; root.classList.toggle('is-compact', c); if (menuOpen) setMenu(false); drawnKey = ''; }
+      if (c !== compact) { compact = c; root.classList.toggle('is-compact', c); drawnKey = ''; requestAnimationFrame(function () { rail.scrollLeft = (N + tIdx) * railStep(); }); }
+      var nc2 = global.innerWidth < 1000;
+      if (nc2 !== navCompact) { navCompact = nc2; root.classList.toggle('is-navcompact', nc2); if (menuOpen) setMenu(false); }
+      // highlight the nav item for the section under the top third of the screen
+      var line = global.innerHeight * 0.35;
+      var topOf = function (id) { var el = root.querySelector('#' + id); return el ? el.getBoundingClientRect().top : Infinity; };
+      var act = topOf('faq') < line ? 'faq' : topOf('people') < line ? 'people' : 'home';
+      if (act !== navActive) { navActive = act; navLinks.forEach(function (a) { a.classList.toggle('is-active', a.getAttribute('data-nav') === act); }); }
       var r = seq.getBoundingClientRect();
       var total = Math.max(1, r.height - global.innerHeight);
       var p = -r.top / total;
@@ -277,5 +328,158 @@
     };
   }
 
-  global.SieloSite = { mount: mount, PEOPLE: PEOPLE, FAQS: FAQS };
+
+  // ================= Contact Us / Get Involved forms =================
+  // Where submissions go. Paste a Formspree (or similar) endpoint, e.g. 'https://formspree.io/f/abcdwxyz'.
+  // While empty, the form validates and shows the thank-you message but nothing is sent anywhere.
+  var FORM_ENDPOINTS = { contact: '', involved: '' };
+
+  var FORM_DEFS = {
+    contact: {
+      fields: [
+        { id: 'firstName', label: 'First name', req: true, type: 'text', ac: 'given-name' },
+        { id: 'lastName', label: 'Last name', req: true, type: 'text', ac: 'family-name' },
+        { id: 'email', label: 'Email address', req: true, type: 'email', ac: 'email' },
+        { id: 'phone', label: 'Phone number', req: false, type: 'tel', ac: 'tel' },
+        { id: 'org', label: 'Organization', req: false, type: 'text', ac: 'organization', span: 2 },
+        { id: 'subject', label: 'Subject', req: true, type: 'text', ac: 'off', span: 2 }
+      ],
+      options: null
+    },
+    involved: {
+      fields: [
+        { id: 'firstName', label: 'First name', req: true, type: 'text', ac: 'given-name' },
+        { id: 'lastName', label: 'Last name', req: true, type: 'text', ac: 'family-name' },
+        { id: 'email', label: 'Email address', req: true, type: 'email', ac: 'email' },
+        { id: 'phone', label: 'Phone number', req: false, type: 'tel', ac: 'tel' },
+        { id: 'city', label: 'City and country', req: true, type: 'text', ac: 'address-level2' },
+        { id: 'org', label: 'Organization', req: false, type: 'text', ac: 'organization' }
+      ],
+      options: [
+        { id: 'beta', label: 'Becoming a beta tester' },
+        { id: 'preorder', label: 'Being one of the first 50 customers to preorder ARLO', note: 'This form registers your interest; it does not reserve a unit or require payment.' },
+        { id: 'newsletter', label: 'Receiving monthly updates from Sielo Robotics' },
+        { id: 'other', label: 'Something else' }
+      ]
+    }
+  };
+
+  function mountForm(root, opts) {
+    opts = opts || {};
+    var base = opts.base || '';
+    if (base && !/\/$/.test(base)) base += '/';
+    if (base) {
+      root.querySelectorAll('[src]').forEach(function (el) {
+        var v = el.getAttribute('src'); if (v && /^media\//.test(v)) el.setAttribute('src', base + v);
+      });
+    }
+    var kind = root.getAttribute('data-form-page');
+    var def = FORM_DEFS[kind];
+    var endpoint = opts.endpoint || FORM_ENDPOINTS[kind];
+    var form = root.querySelector('[data-form]');
+    var card = root.querySelector('[data-card]');
+    var sent = root.querySelector('[data-sent]');
+    var formErr = root.querySelector('[data-form-error]');
+    var wrap = root.querySelector('[data-fields]');
+
+    // fields
+    def.fields.forEach(function (f) {
+      var lab = document.createElement('label');
+      lab.className = 'field' + (f.span === 2 ? ' span2' : '');
+      lab.innerHTML = '<span class="lbl"></span><input>';
+      var l = lab.querySelector('.lbl');
+      l.textContent = f.label;
+      if (f.req) { var s = document.createElement('span'); s.className = 'req'; s.textContent = '*'; l.appendChild(s); }
+      else { var o = document.createElement('span'); o.className = 'opt'; o.textContent = ' — optional'; l.appendChild(o); }
+      var inp = lab.querySelector('input');
+      inp.type = f.type; inp.name = f.id; inp.autocomplete = f.ac;
+      inp.setAttribute('aria-required', f.req ? 'true' : 'false');
+      if (f.req) { inp.setAttribute('data-required', ''); inp.setAttribute('data-label', f.label.toLowerCase()); }
+      wrap.appendChild(lab);
+    });
+
+    // interest options, pre-checked from ?interest=preorder,beta,newsletter (or #preorder)
+    if (def.options) {
+      var q = new URLSearchParams(global.location.search).get('interest') || global.location.hash.replace('#', '');
+      var map = { preorder: 'preorder', 'pre-order': 'preorder', beta: 'beta', newsletter: 'newsletter', mailing: 'newsletter' };
+      var pre = {};
+      (q || '').split(',').forEach(function (k) { var id = map[k.trim().toLowerCase()]; if (id) pre[id] = true; });
+      if (opts.interest) String(opts.interest).split(',').forEach(function (k) { var id = map[k.trim().toLowerCase()]; if (id) pre[id] = true; });
+      var optWrap = root.querySelector('[data-options]');
+      def.options.forEach(function (o) {
+        var lab = document.createElement('label'); lab.className = 'option';
+        lab.innerHTML = '<input type="checkbox"><span class="txt"><span class="t"></span></span>';
+        var cb = lab.querySelector('input'); cb.name = o.id; cb.checked = !!pre[o.id];
+        lab.querySelector('.t').textContent = o.label;
+        if (o.note) { var n = document.createElement('span'); n.className = 'n'; n.textContent = o.note; lab.querySelector('.txt').appendChild(n); }
+        var sync = function () { lab.classList.toggle('is-on', cb.checked); };
+        cb.addEventListener('change', sync); sync();
+        optWrap.appendChild(lab);
+      });
+    }
+
+    // clear a field's error as soon as the person types
+    form.addEventListener('input', function (e) {
+      var el = e.target;
+      if (el.getAttribute('aria-invalid') === 'true') {
+        el.setAttribute('aria-invalid', 'false');
+        var m = el.parentElement.querySelector('.err'); if (m) m.remove();
+      }
+    });
+
+    function showError(el, msg) {
+      el.setAttribute('aria-invalid', 'true');
+      var m = el.parentElement.querySelector('.err');
+      if (!m) { m = document.createElement('span'); m.className = 'err'; m.setAttribute('role', 'alert'); el.parentElement.appendChild(m); }
+      m.textContent = msg;
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      formErr.hidden = true;
+      var first = null;
+      form.querySelectorAll('[data-required]').forEach(function (el) {
+        if (!el.value.trim()) { showError(el, 'Please enter your ' + el.getAttribute('data-label') + '.'); first = first || el; }
+      });
+      var em = form.querySelector('[name=email]');
+      if (em && em.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em.value.trim())) { showError(em, 'Please enter a valid email address.'); first = first || em; }
+      if (kind === 'contact') {
+        var msg = form.querySelector('[name=message]');
+        if (msg.getAttribute('aria-invalid') === 'true' && msg.value.trim() === '') { /* already flagged */ }
+        if (!msg.value.trim()) { showError(msg, 'Please enter a message.'); first = first || msg; }
+        var sub = form.querySelector('[name=subject]');
+        if (sub && !sub.value.trim()) { showError(sub, 'Please enter a subject.'); }
+      }
+      if (first) { first.focus(); return; }
+
+      var data = { form: kind === 'contact' ? 'Contact Us' : 'Get Involved' };
+      form.querySelectorAll('input,textarea').forEach(function (el) {
+        if (el.type === 'checkbox') data[el.name] = el.checked ? 'yes' : 'no';
+        else data[el.name] = el.value.trim();
+      });
+      if (kind === 'contact') data._subject = 'Website contact: ' + data.subject;
+      else data._subject = 'Get Involved: ' + data.firstName + ' ' + data.lastName;
+
+      var done = function () {
+        form.hidden = true; sent.hidden = false;
+        global.scrollTo({ top: card.getBoundingClientRect().top + global.scrollY - 110, behavior: 'smooth' });
+      };
+      if (!endpoint) { if (global.console) console.warn('Sielo form: no endpoint configured, submission not sent', data); done(); return; }
+      var btn = form.querySelector('.submit'); btn.disabled = true;
+      fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(data) })
+        .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); done(); })
+        .catch(function () {
+          btn.disabled = false;
+          formErr.textContent = "Sorry, your message didn't go through. Please try again in a moment.";
+          formErr.hidden = false;
+        });
+    });
+
+    // layout switch below 760px
+    var fc = null;
+    function onResize() { var c = global.innerWidth < 760; if (c !== fc) { fc = c; root.classList.toggle('is-formcompact', c); } }
+    global.addEventListener('resize', onResize); onResize();
+  }
+
+  global.SieloSite = { mount: mount, mountForm: mountForm, TESTIMONIALS: TESTIMONIALS, FAQS: FAQS };
 })(window);

@@ -24,19 +24,22 @@ body.sielo-body{margin:0;background:#fcfcfd;overflow-x:hidden}
 .sielo-nav.is-solid{background:rgba(252,252,253,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(25,32,66,.08)}
 .sielo-nav .logo img{height:52px;max-height:52px;width:auto}
 .sielo.is-compact .sielo-nav .logo img{height:40px}
-.sielo-nav .links{display:flex;align-items:center;gap:clamp(16px,2.4vw,32px);font-size:14px;font-weight:600;color:#192042;justify-content:flex-end}
-.sielo-nav .links a{opacity:.82}
-.sielo-nav .links a:hover{opacity:1}
+.sielo-nav .links{display:flex;align-items:center;gap:clamp(2px,.8vw,10px);font-size:14px;font-weight:600;color:#192042;justify-content:flex-end}
+.sielo-nav .links a.pill{padding:8px clamp(8px,1.1vw,14px);border-radius:999px;white-space:nowrap;opacity:.82;background:rgba(129,212,250,0);transition:background .3s ease,opacity .3s ease}
+.sielo-nav .links a.pill:hover,.sielo-nav .links a.pill.is-active{opacity:1}
+.sielo-nav .links a.pill.is-active{background:rgba(129,212,250,.3)}
+.sielo-nav .links a.cta{margin-left:10px;white-space:nowrap}
 .sielo-nav .links a.cta,.sielo-nav .links a.cta:hover{opacity:1}
 .sielo-nav .burger{display:none;flex-direction:column;align-items:center;justify-content:center;gap:5px;width:44px;height:44px;border-radius:50%;border:1px solid rgba(25,32,66,.15);background:rgba(255,255,255,.7);cursor:pointer;padding:0}
 .sielo-nav .burger span{display:block;width:18px;height:2px;border-radius:1px;background:#192042}
 .sielo-nav .menu{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;padding:6px 20px 20px;background:rgba(252,252,253,.97);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(25,32,66,.08);font-size:17px;font-weight:600;color:#192042}
-.sielo-nav .menu a{padding:14px 0;border-bottom:1px solid rgba(25,32,66,.08)}
+.sielo-nav .menu a{padding:14px 12px;border-radius:12px;border-bottom:1px solid rgba(25,32,66,.08);transition:background .3s ease}
+.sielo-nav .menu a.is-active{background:rgba(129,212,250,.3)}
 .sielo-nav .menu a:last-of-type{border-bottom:0}
 .sielo-nav .menu a.cta{display:flex;align-items:center;justify-content:center;margin-top:8px;padding:14px 20px;border-radius:999px;background:#192042;color:#fff;font-size:15px;border:0}
 .sielo-nav.is-open .menu{display:flex}
-.sielo.is-compact .sielo-nav .links{display:none}
-.sielo.is-compact .sielo-nav .burger{display:flex}
+.sielo.is-navcompact .sielo-nav .links{display:none}
+.sielo.is-navcompact .sielo-nav .burger{display:flex}
 
 /* buttons */
 .sielo .btn{display:inline-flex;align-items:center;justify-content:center;padding:15px 30px;border-radius:999px;font-size:15px;font-weight:600;transition:transform .25s ease,background .25s ease,border-color .25s ease;cursor:pointer}
@@ -57,11 +60,12 @@ body.sielo-body{margin:0;background:#fcfcfd;overflow-x:hidden}
 /* ---------- hero ---------- */
 .sielo-hero{position:relative;height:100svh;min-height:600px;overflow:hidden;background:#fcfcfd}
 .sielo-hero video{position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:auto;object-fit:cover;object-position:center;transform-origin:center;transform:translateX(9%) scale(1.06);-webkit-mask-image:linear-gradient(90deg,rgba(0,0,0,0) 0%,#000 16%);mask-image:linear-gradient(90deg,rgba(0,0,0,0) 0%,#000 16%)}
-.sielo.is-compact .sielo-hero video{bottom:50%;transform:none;-webkit-mask-image:linear-gradient(180deg,#000 68%,rgba(0,0,0,0) 100%);mask-image:linear-gradient(180deg,#000 68%,rgba(0,0,0,0) 100%)}
+.sielo.is-compact .sielo-hero{height:auto;min-height:100svh}
+.sielo.is-compact .sielo-hero video{bottom:auto;height:52svh;transform:none;-webkit-mask-image:linear-gradient(180deg,#000 68%,rgba(0,0,0,0) 100%);mask-image:linear-gradient(180deg,#000 68%,rgba(0,0,0,0) 100%)}
 .sielo.is-compact .sielo-hero .wash{display:none}
 .sielo-hero .wash{position:absolute;inset:0;pointer-events:none;background:linear-gradient(100deg,#fcfcfd 0%,rgba(252,252,253,.8) 8%,rgba(252,252,253,.5) 30%,rgba(252,252,253,.1) 52%,rgba(252,252,253,0) 100%),linear-gradient(0deg,rgba(252,252,253,.5) 0%,rgba(252,252,253,0) 22%)}
 .sielo-hero .inner{position:relative;z-index:2;height:100%;max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,64px);display:flex;flex-direction:column;justify-content:center}
-.sielo.is-compact .sielo-hero .inner{justify-content:flex-end;padding-bottom:40px}
+.sielo.is-compact .sielo-hero .inner{height:auto;min-height:100svh;justify-content:flex-end;padding-top:52svh;padding-bottom:40px}
 .sielo-hero .eyebrow{margin:0 0 18px}
 .sielo-hero h1{font-family:'Sielo','Montserrat',sans-serif;font-weight:700;font-size:clamp(72px,12vw,168px);line-height:.95;letter-spacing:.01em;color:transparent;background:linear-gradient(102deg,#192042 0%,#192042 14%,#81D4FA 30%,#81D4FA 40%,#192042 50%,#FAA781 64%,#FAA781 74%,#192042 88%,#192042 100%);background-size:240% 100%;-webkit-background-clip:text;background-clip:text;animation:sieloShine 16s ease-in-out infinite}
 .sielo-hero .sub{margin:18px 0 0;font-weight:300;font-size:clamp(20px,2.4vw,32px);line-height:1.3;color:rgba(25,32,66,.8);max-width:22ch;text-wrap:pretty}
@@ -193,3 +197,95 @@ body.sielo-body{margin:0;background:#fcfcfd;overflow-x:hidden}
   .sielo-hero h1{animation:none}
   .sielo-trust .track{animation:none}
 }
+
+/* ---------- people / testimonial carousel ---------- */
+.sielo-rail{padding:clamp(72px,9vw,120px) 0;background:#fff;overflow:hidden}
+.sielo-rail .head{max-width:640px;margin:0 auto 48px;padding:0 clamp(20px,5vw,64px);text-align:center}
+.sielo-rail .head .eyebrow{margin:0 0 18px}
+.sielo-rail h2{font-family:'Sielo','Montserrat',sans-serif;font-weight:700;font-size:clamp(32px,4vw,52px);line-height:1.08;letter-spacing:-.01em;text-wrap:balance}
+.sielo-rail .wrap{max-width:1200px;margin:0 auto;padding:0 clamp(20px,5vw,64px)}
+.sielo-rail .track{display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none;padding-bottom:8px;-webkit-overflow-scrolling:touch}
+.sielo-rail .track::-webkit-scrollbar{display:none}
+.sielo-rail figure{margin:0;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:space-between;gap:28px;padding:clamp(20px,3vw,36px);border-radius:24px;background:#fcfcfd;border:1px solid rgba(25,32,66,.08);flex:0 0 calc((100% - 48px) / 3);min-width:0}
+.sielo.is-compact .sielo-rail figure{flex-basis:86%;gap:18px}
+.sielo-rail blockquote{margin:0;font-size:16px;line-height:1.6;color:#192042;text-wrap:pretty}
+.sielo.is-compact .sielo-rail blockquote{font-size:14px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:7;overflow:hidden}
+.sielo-rail figcaption{display:flex;align-items:center;gap:14px}
+.sielo-rail figcaption img,.sielo-rail figcaption .initial{width:64px;height:64px;border-radius:50%;object-fit:cover;flex:none}
+.sielo.is-compact .sielo-rail figcaption img,.sielo.is-compact .sielo-rail figcaption .initial{width:52px;height:52px}
+.sielo-rail .initial{background:#D1F1FD;color:#192042;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:22px}
+.sielo-rail .name{font-weight:700;font-size:16px;color:#192042}
+.sielo-rail .meta{margin:3px 0 0;font-size:13px;line-height:1.35;color:#5c6270}
+.sielo-rail .meta.role{color:#f28a5c;font-weight:600}
+.sielo-rail .controls{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:28px}
+.sielo-rail .dots{display:flex;gap:8px}
+.sielo-rail .dots button{height:6px;width:10px;border-radius:3px;border:0;padding:0;cursor:pointer;background:rgba(25,32,66,.18);transition:width .3s ease,background .3s ease}
+.sielo-rail .dots button.is-active{width:28px;background:#192042}
+.sielo-rail .arrows{display:flex;gap:10px}
+.sielo-rail .arrows button{width:48px;height:48px;border-radius:50%;border:1.5px solid rgba(25,32,66,.2);background:#fff;color:#192042;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .25s ease,border-color .25s ease,color .25s ease}
+.sielo-rail .arrows button:hover{background:#192042;border-color:#192042;color:#fff}
+
+/* ---------- sub-pages (Contact Us, Get Involved) ---------- */
+.sielo-page{min-height:100vh;display:flex;flex-direction:column}
+.sielo-subnav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:14px clamp(20px,4vw,56px);background:rgba(252,252,253,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(25,32,66,.08)}
+.sielo-subnav .logo img{height:44px;width:auto}
+.sielo-subnav .right{display:flex;align-items:center;font-size:14px;font-weight:600}
+.sielo-subnav .links{display:flex;align-items:center;gap:clamp(2px,.8vw,10px);margin-right:10px}
+.sielo-subnav .pill{padding:8px clamp(8px,1.1vw,14px);border-radius:999px;white-space:nowrap;opacity:.82;transition:background .3s ease,opacity .3s ease}
+.sielo-subnav .pill:hover{opacity:1}
+.sielo-subnav .pill.is-active{background:rgba(129,212,250,.3);opacity:1}
+.sielo-subnav .btn-nav{white-space:nowrap}
+.sielo.is-formcompact .sielo-subnav .links{display:none}
+
+.sielo-formpage{flex:1;padding:clamp(48px,7vw,104px) clamp(20px,5vw,64px) clamp(72px,9vw,120px);background:linear-gradient(180deg,#fcfcfd 0%,#EAF7FD 100%)}
+.sielo-formpage .grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:clamp(40px,6vw,96px);align-items:start}
+.sielo-formpage .intro{position:sticky;top:120px;min-width:0}
+.sielo.is-formcompact .sielo-formpage .intro{position:static}
+.sielo-formpage .intro .eyebrow{margin:0 0 20px}
+.sielo-formpage h1{font-family:'Sielo','Montserrat',sans-serif;font-weight:700;font-size:clamp(38px,5vw,64px);line-height:1.04;letter-spacing:-.01em;text-wrap:balance}
+.sielo-formpage .kicker{margin:24px 0 0;font-size:clamp(18px,1.6vw,22px);line-height:1.4;font-weight:500;color:#192042}
+.sielo-formpage .lead{margin:24px 0 0;font-size:17px;line-height:1.65;color:#5c6270;max-width:46ch;text-wrap:pretty}
+.sielo-formpage .kicker+.lead{margin-top:16px}
+.sielo-formpage .card{min-width:0;background:#fff;border:1px solid rgba(25,32,66,.08);border-radius:28px;padding:clamp(24px,4vw,48px)}
+.sielo-formpage form{margin:0}
+.sielo-formpage h2.section{margin:0 0 22px;font-size:18px;font-weight:700;color:#192042}
+.sielo-formpage .fields{display:grid;gap:20px 16px;grid-template-columns:repeat(2,minmax(0,1fr))}
+.sielo.is-formcompact .sielo-formpage .fields{grid-template-columns:1fr}
+.sielo-formpage .field{display:flex;flex-direction:column;gap:8px;min-width:0}
+.sielo-formpage .fields .field.span2{grid-column:1 / -1}
+.sielo.is-formcompact .sielo-formpage .fields .field.span2{grid-column:auto}
+.sielo-formpage .field.full{margin-top:20px}
+.sielo-formpage .field.notes{margin-top:36px}
+.sielo-formpage .lbl{font-size:14px;font-weight:600;color:#192042}
+.sielo-formpage .req{color:#f28a5c}
+.sielo-formpage .opt{font-weight:400;color:#7b818c}
+.sielo-formpage input[type=text],.sielo-formpage input[type=email],.sielo-formpage input[type=tel]{height:52px;padding:0 16px;border-radius:12px;border:1.5px solid rgba(25,32,66,.16);background:#fcfcfd;font-size:16px;color:#192042;outline:none;width:100%;transition:border-color .2s ease,box-shadow .2s ease}
+.sielo-formpage textarea{padding:14px 16px;border-radius:12px;border:1.5px solid rgba(25,32,66,.16);background:#fcfcfd;font-size:16px;line-height:1.5;color:#192042;outline:none;resize:vertical;min-height:160px;width:100%;font-family:inherit;transition:border-color .2s ease,box-shadow .2s ease}
+.sielo-formpage .notes textarea{min-height:120px}
+.sielo-formpage input:focus,.sielo-formpage textarea:focus{border-color:#192042;box-shadow:0 0 0 4px rgba(129,212,250,.35);background:#fff}
+.sielo-formpage [aria-invalid=true]{border-color:#c0492f}
+.sielo-formpage .err{font-size:13px;color:#b8432c}
+.sielo-formpage .check{display:flex;gap:12px;align-items:flex-start;margin-top:24px;cursor:pointer;font-size:15px;line-height:1.4;color:#192042}
+.sielo-formpage input[type=checkbox]{width:20px;height:20px;margin:0;accent-color:#192042;flex:none;cursor:pointer}
+.sielo-formpage .interests{border:0;padding:0;margin:40px 0 0;min-width:0}
+.sielo-formpage .interests legend{padding:0;font-size:18px;font-weight:700;color:#192042}
+.sielo-formpage .interests .hint{margin:6px 0 16px;font-size:14px;color:#5c6270}
+.sielo-formpage .options{display:flex;flex-direction:column;gap:10px}
+.sielo-formpage .option{display:flex;gap:14px;align-items:flex-start;padding:16px 18px;border-radius:14px;cursor:pointer;border:1.5px solid rgba(25,32,66,.12);background:#fcfcfd;transition:border-color .2s ease,background .2s ease}
+.sielo-formpage .option.is-on{border-color:#192042;background:#EAF7FD}
+.sielo-formpage .option input{margin-top:1px}
+.sielo-formpage .option .txt{display:flex;flex-direction:column;gap:4px;min-width:0}
+.sielo-formpage .option .t{font-size:15.5px;font-weight:500;line-height:1.4;color:#192042}
+.sielo-formpage .option .n{font-size:13px;line-height:1.5;color:#5c6270}
+.sielo-formpage .submit{margin-top:32px;display:inline-flex;align-items:center;justify-content:center;height:54px;padding:0 40px;border:0;border-radius:999px;background:#192042;color:#fff;font-size:16px;font-weight:600;cursor:pointer;box-shadow:0 10px 24px -12px rgba(25,32,66,.5);transition:background .25s ease,transform .25s ease}
+.sielo-formpage .submit:hover{background:#2a3466;transform:translateY(-1px)}
+.sielo-formpage .submit[disabled]{opacity:.6;cursor:progress;transform:none}
+.sielo.is-formcompact .sielo-formpage .submit{width:100%}
+.sielo-formpage .form-error{margin:20px 0 0;font-size:14px;color:#b8432c}
+.sielo-formpage .sent{display:flex;flex-direction:column;align-items:flex-start;gap:16px}
+.sielo-formpage .sent[hidden],.sielo-formpage form[hidden],.sielo-formpage [hidden]{display:none}
+.sielo-formpage .tick{width:56px;height:56px;border-radius:50%;background:#EAF7FD;display:flex;align-items:center;justify-content:center}
+.sielo-formpage .sent h2{margin:8px 0 0;font-family:'Sielo','Montserrat',sans-serif;font-weight:700;font-size:clamp(26px,3vw,34px);line-height:1.15;color:#192042;text-wrap:balance}
+.sielo-formpage .sent p{font-size:17px;line-height:1.6;color:#5c6270;max-width:44ch;text-wrap:pretty}
+.sielo-formpage .sent .btn{margin-top:12px;padding:14px 28px}
+.sielo-footer .copy{color:#5c6270}
