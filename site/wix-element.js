@@ -22,7 +22,7 @@
     ? new URL('.', document.currentScript.src).href
     : 'https://yugmil11.github.io/sielo-assests/site/';
   var TAG = 'sielo-arlo-site';
-  var VERSION = '20261028g'; // bumped on every deploy so Wix and browsers fetch fresh files
+  var VERSION = '20261029a'; // bumped on every deploy so Wix and browsers fetch fresh files
   var BODIES = { home: 'body.html', contact: 'contact-body.html', involved: 'involved-body.html' };
   if (window.customElements.get(TAG)) return;
 
