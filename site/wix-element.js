@@ -22,12 +22,22 @@
     ? new URL('.', document.currentScript.src).href
     : 'https://yugmil11.github.io/sielo-assests/site/';
   var TAG = 'sielo-arlo-site';
-  var VERSION = '20261104b'; // bumped on every deploy so Wix and browsers fetch fresh files
+  var VERSION = '20261104c'; // bumped on every deploy so Wix and browsers fetch fresh files
   var BODIES = { home: 'body.html', contact: 'contact-body.html', involved: 'involved-body.html', terms: 'terms-body.html', privacy: 'privacy-body.html' };
   // Inside the Wix editor the preview frame is sized to its own content, so any height expressed in
   // viewport units (100vh, 300vh …) grows with the page and the element's measured height runs away.
   // Use fixed pixel heights there; the live site keeps the viewport-based layout.
-  var IN_EDITOR = /\.editor\.wix\.com$/i.test(location.hostname) || /\/html\/editor\//.test(location.pathname);
+  // The editor hosts custom elements in an iframe served from static.parastorage.com (editor-elements-library);
+  // the preview itself runs on *.editor.wix.com. As a fallback, a frame that is already absurdly tall is the loop.
+  function editorMode() {
+    try {
+      if (/(^|\.)parastorage\.com$/i.test(location.hostname) || /editor-elements-library/.test(location.pathname)) return true;
+      if (/\.editor\.wix\.com$/i.test(location.hostname) || /\/html\/editor\//.test(location.pathname)) return true;
+      if (window.top !== window.self && window.innerHeight > 8000) return true;
+    } catch (e) {}
+    return false;
+  }
+  var IN_EDITOR = editorMode();
   var EDITOR_CSS = '\n.sielo{min-height:0!important}' +
     '\n.sielo-page{min-height:900px!important}' +
     '\n.sielo-hero,.sielo.is-compact .sielo-hero,.sielo.is-compact .sielo-hero .inner{height:820px!important;min-height:0!important}' +
@@ -106,6 +116,15 @@
                '\n[data-mesh-id]:has(> div > ' + TAG + '){margin-top:0!important}' +
                (IN_EDITOR ? EDITOR_CSS : '');
         addOnce('sielo-site-styles', function () { var s = document.createElement('style'); s.textContent = css; return s; });
+        if (!IN_EDITOR) {
+          // late fallback: a frame that balloons after load is the editor's height feedback loop
+          var onResize = function () {
+            if (window.top === window.self || window.innerHeight < 8000) return;
+            window.removeEventListener('resize', onResize);
+            addOnce('sielo-editor-styles', function () { var s = document.createElement('style'); s.textContent = EDITOR_CSS; return s; });
+          };
+          window.addEventListener('resize', onResize);
+        }
         el.innerHTML = res[1];
         // point the site's own page links at the matching Wix pages (keeps ?interest=… and #section)
         el.querySelectorAll('a[href]').forEach(function (a) {
