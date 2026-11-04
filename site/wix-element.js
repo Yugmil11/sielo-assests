@@ -22,8 +22,18 @@
     ? new URL('.', document.currentScript.src).href
     : 'https://yugmil11.github.io/sielo-assests/site/';
   var TAG = 'sielo-arlo-site';
-  var VERSION = '20261104a'; // bumped on every deploy so Wix and browsers fetch fresh files
+  var VERSION = '20261104b'; // bumped on every deploy so Wix and browsers fetch fresh files
   var BODIES = { home: 'body.html', contact: 'contact-body.html', involved: 'involved-body.html', terms: 'terms-body.html', privacy: 'privacy-body.html' };
+  // Inside the Wix editor the preview frame is sized to its own content, so any height expressed in
+  // viewport units (100vh, 300vh …) grows with the page and the element's measured height runs away.
+  // Use fixed pixel heights there; the live site keeps the viewport-based layout.
+  var IN_EDITOR = /\.editor\.wix\.com$/i.test(location.hostname) || /\/html\/editor\//.test(location.pathname);
+  var EDITOR_CSS = '\n.sielo{min-height:0!important}' +
+    '\n.sielo-page{min-height:900px!important}' +
+    '\n.sielo-hero,.sielo.is-compact .sielo-hero,.sielo.is-compact .sielo-hero .inner{height:820px!important;min-height:0!important}' +
+    '\n.sielo.is-compact .sielo-hero video{height:420px!important}.sielo.is-compact .sielo-hero .inner{padding-top:420px!important}' +
+    '\n.sielo-seq{height:2400px!important}.sielo-seq .pin{height:800px!important}' +
+    '\n.sielo-seq .fade-top{height:140px!important}.sielo-seq .fade-bot{height:130px!important}';
   if (window.customElements.get(TAG)) return;
 
   function addOnce(id, make) {
@@ -93,7 +103,8 @@
                // 320px column; make the wrapper follow the column instead.
                '\ndiv:has(> ' + TAG + '){width:100%!important;min-width:0!important;max-width:100%!important}' +
                // Wix's section layout pulls the grid up by (content - editor height); keep the page at the top.
-               '\n[data-mesh-id]:has(> div > ' + TAG + '){margin-top:0!important}';
+               '\n[data-mesh-id]:has(> div > ' + TAG + '){margin-top:0!important}' +
+               (IN_EDITOR ? EDITOR_CSS : '');
         addOnce('sielo-site-styles', function () { var s = document.createElement('style'); s.textContent = css; return s; });
         el.innerHTML = res[1];
         // point the site's own page links at the matching Wix pages (keeps ?interest=… and #section)
