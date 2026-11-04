@@ -530,5 +530,21 @@
     global.addEventListener('resize', onResize); onResize();
   }
 
-  global.SieloSite = { mount: mount, mountForm: mountForm, TESTIMONIALS: TESTIMONIALS, FAQS: FAQS };
+  // content-only pages (Terms of Use, Privacy Policy): just media paths and the compact nav switch
+  function mountPage(root, opts) {
+    opts = opts || {};
+    var base = opts.base || '';
+    if (base && !/\/$/.test(base)) base += '/';
+    if (base) {
+      root.querySelectorAll('[src]').forEach(function (el) {
+        var v = el.getAttribute('src'); if (v && /^media\//.test(v)) el.setAttribute('src', base + v);
+      });
+    }
+    var fc = null;
+    function onResize() { var c = layoutWidth(root) < 760; if (c !== fc) { fc = c; root.classList.toggle('is-formcompact', c); } }
+    global.addEventListener('resize', onResize); onResize();
+    return { destroy: function () { global.removeEventListener('resize', onResize); } };
+  }
+
+  global.SieloSite = { mount: mount, mountForm: mountForm, mountPage: mountPage, TESTIMONIALS: TESTIMONIALS, FAQS: FAQS };
 })(window);

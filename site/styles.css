@@ -295,3 +295,20 @@ body.sielo-body{margin:0;background:#fcfcfd;overflow-x:hidden}
 .sielo-formpage .sent p{font-size:17px;line-height:1.6;color:#5c6270;max-width:44ch;text-wrap:pretty}
 .sielo-formpage .sent .btn{margin-top:12px;padding:14px 28px}
 .sielo-footer .copy{color:#5c6270}
+
+/* ---- legal pages (Terms of Use, Privacy Policy) */
+.sielo-legal{flex:1;padding:clamp(40px,6vw,88px) clamp(20px,5vw,64px) clamp(72px,9vw,120px);background:linear-gradient(180deg,#fcfcfd 0%,#f5f8fb 100%)}
+.sielo-legal .inner{max-width:780px;margin:0 auto;color:#192042}
+.sielo-legal h1{margin:0 0 12px;font-family:'Sielo','Montserrat',sans-serif;font-weight:700;font-size:clamp(38px,5vw,60px);line-height:1.04;letter-spacing:-.01em}
+.sielo-legal .eyebrow{margin:0 0 8px;font-size:12px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#f28a5c}
+.sielo-legal .meta{margin:0 0 36px;font-size:14px;color:#5c6270}
+.sielo-legal h1+p:not(.meta){margin-top:28px}
+.sielo-legal h2{margin:44px 0 14px;font-family:'Sielo','Montserrat',sans-serif;font-weight:700;font-size:clamp(20px,2vw,24px);line-height:1.25;letter-spacing:-.005em}
+.sielo-legal h2 .num{color:#81D4FA;margin-right:4px}
+.sielo-legal p{margin:0 0 16px;font-size:16px;line-height:1.7;color:#3b4258;text-wrap:pretty}
+.sielo-legal p.sub{padding-left:28px}
+.sielo-legal ul,.sielo-legal ol{margin:0 0 18px;padding-left:26px}
+.sielo-legal li{margin:0 0 10px;font-size:16px;line-height:1.65;color:#3b4258}
+.sielo-legal li::marker{color:#81D4FA;font-weight:700}
+.sielo-legal a{color:#192042;text-decoration:underline;text-decoration-color:rgba(129,212,250,.9);text-underline-offset:3px;word-break:break-word}
+.sielo-legal a:hover{text-decoration-color:#192042}

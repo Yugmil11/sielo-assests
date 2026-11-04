@@ -3,7 +3,7 @@
      https://yugmil11.github.io/sielo-assests/site/wix-element.js
    Tag name: sielo-arlo-site
    Attributes (Wix: Custom Element → Set Attributes):
-     page          home (default) | contact | involved
+     page          home (default) | contact | involved | terms | privacy
      contact-url   Wix page path for Contact Us     (default /contact)
      involved-url  Wix page path for Get Involved   (default /get-involved)
      home-url      Wix page path for the home page  (default /)
@@ -22,8 +22,8 @@
     ? new URL('.', document.currentScript.src).href
     : 'https://yugmil11.github.io/sielo-assests/site/';
   var TAG = 'sielo-arlo-site';
-  var VERSION = '20261103a'; // bumped on every deploy so Wix and browsers fetch fresh files
-  var BODIES = { home: 'body.html', contact: 'contact-body.html', involved: 'involved-body.html' };
+  var VERSION = '20261104a'; // bumped on every deploy so Wix and browsers fetch fresh files
+  var BODIES = { home: 'body.html', contact: 'contact-body.html', involved: 'involved-body.html', terms: 'terms-body.html', privacy: 'privacy-body.html' };
   if (window.customElements.get(TAG)) return;
 
   function addOnce(id, make) {
@@ -68,7 +68,9 @@
       var urls = {
         'index.html': el.getAttribute('home-url') || '/',
         'contact.html': el.getAttribute('contact-url') || '/contact',
-        'get-involved.html': el.getAttribute('involved-url') || '/get-involved'
+        'get-involved.html': el.getAttribute('involved-url') || '/get-involved',
+        'terms.html': el.getAttribute('terms-url') || '/terms-of-use',
+        'privacy.html': el.getAttribute('privacy-url') || '/english-privacy-policy'
       };
       el.style.display = 'block';
       el.style.width = '100%';
@@ -95,21 +97,16 @@
         addOnce('sielo-site-styles', function () { var s = document.createElement('style'); s.textContent = css; return s; });
         el.innerHTML = res[1];
         // point the site's own page links at the matching Wix pages (keeps ?interest=… and #section)
-        var legal = {
-          '#terms': el.getAttribute('terms-url') || '/terms-of-use',
-          '#privacy': el.getAttribute('privacy-url') || '/english-privacy-policy'
-        };
         el.querySelectorAll('a[href]').forEach(function (a) {
           var href = a.getAttribute('href');
-          if (legal[href]) { a.setAttribute('href', legal[href]); return; }
-          var m = href.match(/^(index\.html|contact\.html|get-involved\.html)(.*)$/);
+          var m = href.match(/^(index\.html|contact\.html|get-involved\.html|terms\.html|privacy\.html)(.*)$/);
           if (!m) return;
           var target = urls[m[1]], rest = m[2] || '';
           a.setAttribute('href', (target === '/' && rest.charAt(0) === '#') ? '/' + rest : target + rest);
         });
         var root = el.querySelector('#sielo-root');
-        el.__site = page === 'home'
-          ? window.SieloSite.mount(root, { base: BASE })
+        el.__site = page === 'home' ? window.SieloSite.mount(root, { base: BASE })
+          : (page === 'terms' || page === 'privacy') ? window.SieloSite.mountPage(root, { base: BASE })
           : window.SieloSite.mountForm(root, { base: BASE, submit: el.submitToWix.bind(el) });
       }).catch(function (err) {
         el.innerHTML = '<p style="font-family:sans-serif;padding:24px">Sielo site failed to load: ' + err.message + '</p>';
