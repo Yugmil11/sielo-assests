@@ -22,7 +22,7 @@
     ? new URL('.', document.currentScript.src).href
     : 'https://yugmil11.github.io/sielo-assests/site/';
   var TAG = 'sielo-arlo-site';
-  var VERSION = '20261104c'; // bumped on every deploy so Wix and browsers fetch fresh files
+  var VERSION = '20261104d'; // bumped on every deploy so Wix and browsers fetch fresh files
   var BODIES = { home: 'body.html', contact: 'contact-body.html', involved: 'involved-body.html', terms: 'terms-body.html', privacy: 'privacy-body.html' };
   // Inside the Wix editor the preview frame is sized to its own content, so any height expressed in
   // viewport units (100vh, 300vh …) grows with the page and the element's measured height runs away.
@@ -112,8 +112,10 @@
                // Wix's mobile layout gives the element's wrapper a fixed desktop width (1200px) inside a
                // 320px column; make the wrapper follow the column instead.
                '\ndiv:has(> ' + TAG + '){width:100%!important;min-width:0!important;max-width:100%!important}' +
-               // Wix's section layout pulls the grid up by (content - editor height); keep the page at the top.
-               '\n[data-mesh-id]:has(> div > ' + TAG + '){margin-top:0!important}' +
+               // Wix's section layout pulls the grid up by (content - editor height); keep the page at the top,
+               // and let the section shrink to the content instead of keeping the height measured in the editor
+               // (otherwise a short page shows a blank band under the footer).
+               '\n[data-mesh-id]:has(> div > ' + TAG + '){margin-top:0!important' + (IN_EDITOR ? '' : ';min-height:0!important') + '}' +
                (IN_EDITOR ? EDITOR_CSS : '');
         addOnce('sielo-site-styles', function () { var s = document.createElement('style'); s.textContent = css; return s; });
         if (!IN_EDITOR) {

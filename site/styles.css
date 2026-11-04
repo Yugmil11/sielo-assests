@@ -312,3 +312,8 @@ body.sielo-body{margin:0;background:#fcfcfd;overflow-x:hidden}
 .sielo-legal li::marker{color:#81D4FA;font-weight:700}
 .sielo-legal a{color:#192042;text-decoration:underline;text-decoration-color:rgba(129,212,250,.9);text-underline-offset:3px;word-break:break-word}
 .sielo-legal a:hover{text-decoration-color:#192042}
+.sielo.is-formcompact .sielo-legal{padding:40px 20px 72px}
+.sielo.is-formcompact .sielo-legal h1{font-size:38px}
+.sielo.is-formcompact .sielo-legal h2{font-size:20px}
+.sielo.is-formcompact .sielo-legal p.sub{padding-left:18px}
+.sielo.is-formcompact .sielo-footer,.sielo.is-compact .sielo-footer{padding:40px 20px 48px}
